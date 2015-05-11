@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="reftalentfull"><!--{{{-->
+		<frame>recordsheet</frame>
+		<placement>
+			<size height="360" width="375" />
+		</placement>
+		<sizelimits>
+			<minimum height="360" width="375"  />
+			<dynamic />
+		</sizelimits>        
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+            <sub_record_header name="header">
+                <class>ref_talent_header</class>
+            </sub_record_header>            
+			<ref_contentframe/>
+
+			<labeledstring name="attribname">
+				<anchored to="contentframe" position="insidetopleft" offset="5,5"/>
+				<label>attribute</label>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<script>
+					function onInit()
+						super.onInit();
+						setReadOnly(true);
+					end
+				</script>
+			</labeledstring>
+            
+			<stringcontrol name="statplus">
+				<anchored to="attribname" position="right" offset="5,0"/>
+				<static>+</static>
+			</stringcontrol>
+            
+			<numberfield name="statmod">
+				<anchored to="statplus" position="right" offset="5,0">
+                    <size width="20"/>
+                </anchored>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>modifier</name>
+					<offset>4,4,4,4</offset>
+				</frame>
+				<readonly />
+			</numberfield>
+
+			<stringcontrol name="attribplus">
+				<anchored to="statmod" position="right" offset="5,0"/>
+				<static>+</static>
+			</stringcontrol>
+
+			
+			<stringcontrol name="ranklabel">
+				<anchored to="attribplus" position="right" offset="5,0"/>
+				<font>sheettext</font>
+				<static>Rank</static>
+			</stringcontrol>
+
+			<stringcontrol name="rankequal">
+				<anchored to="ranklabel" position="right" offset="5,0"/>
+				<static>=</static>
+			</stringcontrol>
+			
+			<stringcontrol name="steplabel">
+				<anchored to="rankequal" position="right" offset="5,0"/>
+				<font>sheettext</font>
+				<static>Step</static>
+			</stringcontrol>
+                       
+			<stringcontrol name="strainlabel">
+				<anchored to="steplabel" position="right" offset="20,0"/>
+				<font>sheettext</font>
+				<static>Strain:</static>
+			</stringcontrol>
+            
+			<numberfield name="strain">
+				<anchored to="strainlabel" position="right" offset="10,0">
+                    <size width="26"/>
+                </anchored>
+				<tabtarget>
+					<prev>rank</prev>
+				</tabtarget>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<font>sheetnumber</font>
+                <readonly/>
+			</numberfield>
+			
+			<stringcontrol name="actionlabel">
+				<anchored to="attribname" position="belowleft" offset="0,10"/> 
+				<font>sheetlabelsmall</font>
+				<static>Action:</static>
+			</stringcontrol>
+
+			<action_cycler name="action">
+				<anchored to="actionlabel" position="rightlow" offset="5,0"/>
+				<readonly />
+			</action_cycler>
+			
+			<stringcontrol name="skilluselabel">
+				<anchored to="action"  position="right" offset="10,0"/>
+				<font>sheetlabelsmall</font>
+				<static>Skill Use:</static>
+			</stringcontrol>
+
+			<skilluse_cycler name="skilluse">
+				<anchored to="skilluselabel" position="rightlow" offset="5,0"/>
+				<readonly />
+			</skilluse_cycler>
+			
+			<stringcontrol name="descriptionlabel">
+				<anchored to="actionlabel" position="belowleft" offset="0,10"/>
+				<font>sheettext</font>
+				<static>Description</static>
+				<center/>
+			</stringcontrol>
+			
+			<ref_description/>
+			<scrollbar_description/>
+
+			<resize_recordsheet />
+			<close_recordsheet />			
+		</sheetdata>
+	</windowclass><!--}}}-->
+    
+	<windowclass name="ref_talent_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>reftalentfull</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+    
+</root>

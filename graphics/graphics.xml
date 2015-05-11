@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<includefile source="graphics/graphics_fonts.xml" />
+	<includefile source="graphics/graphics_frames.xml" />
+
+    <icon name="tabtop" file="graphics/icons/tabtop.png" />
+	<icon name="tab_main" file="graphics/icons/tab_main.png" />
+	<icon name="tab_combat" file="graphics/icons/tab_combat.png" />
+	<icon name="tab_skills" file="graphics/icons/tab_skills.png" />
+	<icon name="tab_abilities" file="graphics/icons/tab_abilities.png" />
+	<icon name="tab_inventory" file="graphics/icons/tab_inventory.png" />
+	<icon name="tab_spells" file="graphics/icons/tab_spells.png" />
+	<icon name="tab_notes" file="graphics/icons/tab_notes.png" />
+	<icon name="tab_threads" file="graphics/icons/tab_threads.png" />
+	<icon name="tab_other" file="graphics/icons/tab_other.png" />
+	<icon name="tab_shared" file="graphics/icons/tab_shared.png" />
+	<icon name="tab_talents" file="graphics/icons/tab_talents.png" />
+
+	<icon name="indicator_shield" file="graphics/icons/indicator_shield.png" />
+	<icon name="indicator_shielddown" file="graphics/icons/indicator_shielddown.png" />
+	<icon name="indicator_sword" file="graphics/icons/indicator_sword.png" />
+	<icon name="indicator_sworddown" file="graphics/icons/indicator_sworddown.png" />
+	<icon name="indicator_checkon" file="graphics/icons/indicator_checkon.png" />
+	<icon name="indicator_checkoff" file="graphics/icons/indicator_checkoff.png" />
+    
+	<icon name="indicator_zoom" file="graphics/icons/indicator_zoom.png" />
+	<icon name="indicator_casterprep" file="graphics/icons/indicator_casterprep.png" />
+    
+	<icon name="indicator_linked" file="graphics/icons/indicator_linked.png" />    
+    
+	<icon name="button_openwindow" file="graphics/icons/button_openwindow.png" />
+	<icon name="button_emptytarget" file="graphics/icons/button_emptytarget.png" />    
+    
+	<icon name="button_scroller" file="graphics/buttons/button_scroller.png" />
+	<icon name="button_scroller_down" file="graphics/buttons/button_scroller_down.png" />        
+    
+    
+    
+</root>

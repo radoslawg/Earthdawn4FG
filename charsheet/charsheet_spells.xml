@@ -1,0 +1,537 @@
+<!-- vim: set tabstop=4 shiftwidth=4 foldmethod=marker commentstring=\<\!--\%s--\>: -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+
+	<windowclass name="charsheet_spells">
+		<placement>
+			<size>
+				<width>252</width>
+				<height>611</height>
+			</size>
+		</placement>
+		<nodelete />
+		<sheetdata>
+
+			<genericcontrol name="spellframe">
+				<bounds>15,50,480,380</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="spelllabel">
+				<anchored>
+					<to>spellframe</to>
+					<position>above</position>
+					<offset>-216,-8</offset>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+				<offset>3,5,3,5</offset>
+				</frame>
+				<font>titlefont</font>
+				<static>Spells</static>
+				<center />
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>10,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Circle</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>40,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Name</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>150,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static># Thr</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>187,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Weaving</static>
+			</stringcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>242,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Diff</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>275,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Range</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>350,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Effect Step</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>413,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Full</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>spellframe</to>
+					<position>insidetopleft</position>
+					<offset>437,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Notes</static>
+			</stringcontrol>
+			
+			<windowlist name="spelllist">
+				<bounds>30,75,475,345</bounds>
+				<datasource>.spells</datasource>
+				<class>spell_listitem</class>
+				<allowcreate />
+				<allowdelete />
+				<skipempty />
+				<script>
+					function onSortCompare(w1, w2)
+						local returnValue = false;
+												
+						local circle1 = tonumber(w1.circle.getValue());
+						local circle2 = tonumber(w2.circle.getValue());
+						
+						if circle1 == nil then
+							circle1 = 0;
+						end
+						if circle2 == nil then
+							circle2 = 0;
+						end
+							
+ 
+						if circle1 == circle2 then
+							returnValue = w1.name.getValue() &gt; w2.name.getValue();
+						else
+							returnValue = circle1 &gt; circle2;
+						end
+ 
+						return returnValue;
+					end
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							local class, datasource = draginfo.getShortcutData();
+							local source = draginfo.getDatabaseNode();
+
+							if source and class == "refspellfull" then
+								local newentry = addCustomSpell(source);
+							else
+								return nil;
+							end
+							return true;
+						end
+					end
+					function addCustomSpell(source)
+						local newentry = createWindow();
+						newentry.name.setValue(source.createChild("name", "string").getValue());
+						local newnode = newentry.getDatabaseNode();
+						newnode.createChild("disciplinename", "string").setValue(source.createChild("disciplinename", "string").getValue());
+						newnode.createChild("circle", "number").setValue(source.createChild("circle", "number").getValue());
+						newnode.createChild("numthreads", "number").setValue(source.createChild("numthreads", "number").getValue());
+						newnode.createChild("weavethread", "number").setValue(source.createChild("weavethread", "number").getValue());
+						newnode.createChild("reattune", "number").setValue(source.createChild("reattune", "number").getValue());
+						newnode.createChild("range", "string").setValue(source.createChild("range", "string").getValue());
+						newnode.createChild("duration", "string").setValue(source.createChild("duration", "string").getValue());
+						newnode.createChild("casting", "number").setValue(source.createChild("casting", "number").getValue());
+						newnode.createChild("effect", "number").setValue(source.createChild("effect", "number").getValue());
+						newnode.createChild("effecttext", "string").setValue(source.createChild("effecttext", "string").getValue());
+						newnode.createChild("description", "formattedtext").setValue(source.createChild("detailtext", "formattedtext").getValue());
+					end
+				</script>
+			</windowlist>
+            <scrollbar>
+				<target>spelllist</target>
+                <anchored to="spelllist" />                
+            </scrollbar>			
+<!-- MATRIX --><!--{{{-->
+			<genericcontrol name="matrixframe">
+				<bounds>15,430,480,170</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			
+			<stringcontrol name="matrixlabel">
+				<anchored>
+					<to>matrixframe</to>
+					<position>above</position>
+					<offset>-206,-8</offset>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+				<offset>3,5,3,5</offset>
+				</frame>
+				<font>titlefont</font>
+				<static>Matricies</static>
+				<center />
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>15,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Name:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>183,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Rank</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>215,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Spell</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>344,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>DT</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>364,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>DR</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>384,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>MA</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>413,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Full</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>matrixframe</to>
+					<position>insidetopleft</position>
+					<offset>437,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Notes</static>
+			</stringcontrol>
+			
+			<windowlist name="matrixslist">
+				<bounds>30,455,475,135</bounds>
+				<datasource>.matrixs</datasource>
+				<class>matrix_listitem</class>
+				<allowcreate />
+				<allowdelete />
+				<skipempty />
+				<script>
+					function onSortCompare(w1, w2)
+						local returnValue = false;
+						if w1.name.getValue() == "" then
+							return true;
+						elseif w2.name.getValue() == "" then
+							return false;
+						end
+						
+						returnValue = w1.name.getValue() &gt; w2.name.getValue();
+						return returnValue;
+					end
+				</script>
+			</windowlist>
+			
+            <scrollbar>
+				<target>matrixslist</target>
+                <anchored to="matrixslist" />                
+            </scrollbar>			
+<!--}}}-->
+
+
+		</sheetdata>
+	</windowclass>
+
+<!-- MATRIX LIST ITEM --><!--{{{-->
+	<windowclass name="matrix_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<textlistitemvalue name="name">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>160</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>matrixDT</prev>
+					<next>spellname</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+					function onDoubleClick()
+						win = Interface.openWindow("matrixfull",window.getDatabaseNode());
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<numberfield name="rank">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>170</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<tabtarget>
+					<next>talent</next>
+					<prev>name</prev>
+				</tabtarget>
+				<font>sheetnumber</font>
+				<script>
+					function onWheel()
+						return false;
+					end
+				</script>
+				<readonly />
+			</numberfield>
+
+			<textlistitemvalue name="spellname">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>200</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>120</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>name</prev>
+					<next>matrixDT</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+			</textlistitemvalue>
+			<textlistitemnumber name="matrixDT">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>330</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>name</next>
+					<prev>spellname</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<tooltip><text>Matrix Damage Taken</text></tooltip>
+			</textlistitemnumber>
+			<textlistitemnumber name="matrixDR">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>350</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>name</next>
+					<prev>talent</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<tooltip><text>Matrix Damage Rating</text></tooltip>
+				<readonly />
+			</textlistitemnumber>
+			<textlistitemnumber name="matrixMA">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>370</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>name</next>
+					<prev>talent</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<tooltip><text>Matrix Mystic Armor</text></tooltip>
+				<readonly />
+			</textlistitemnumber>
+			<buttoncontrol name="fullmatrix">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("matrixfull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+			<windowreferencefield name="matrix_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+</root>

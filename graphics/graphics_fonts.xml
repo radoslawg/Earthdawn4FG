@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<!-- COMBAT TRACKER -->
+	<font name="ct_header">
+		<fgffile name="graphics/fonts/dnd4e-regular-8.fgf" />
+		<color value="#FFF1E3D5" />
+	</font>
+	<font name="ct_label">
+		<fgffile name="graphics/fonts/dnd4e-bold-10.fgf" />
+		<color value="#FFF1E3D5" />
+	</font>
+	<font name="ct_labelnumber">
+		<fgffile name="graphics/fonts/dnd4e-bold-11.fgf" />
+		<color value="#FF000000" />
+	</font>
+	<font name="ct_text">
+		<fgffile name="graphics/fonts/dnd4e-regular-9.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="ct_name">
+		<fgffile name="graphics/fonts/dnd4e-regular-9.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="ct_active">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="ct_healthy_number">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#008b00" />
+	</font>
+	<font name="ct_ltwound_number">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#238b23" />
+	</font>
+	<font name="ct_bloodied_number">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#cd2626" />
+	</font>
+	<font name="ct_dead_number">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#7f7f7f" />
+	</font>
+	<font name="ct_healthy_string">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#008b00" />
+	</font>
+	<font name="ct_ltwound_string">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#238b23" />
+	</font>
+	<font name="ct_bloodied_string">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#cd2626" />
+	</font>
+	<font name="ct_dead_string">
+		<fgffile name="graphics/fonts/dnd4e-bold-9.fgf" />
+		<color value="#7f7f7f" />
+	</font>
+
+	<font name="chatfont">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="chatitalicfont">
+		<fgffile name="graphics/fonts/regularitalic.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="chatbolditalicfont">
+		<fgffile name="graphics/fonts/regularbolditalic.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="npcchatfont">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#000066" />
+	</font>
+
+	<font name="dmfont">
+		<fgffile name="graphics/fonts/regularitalic.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="narratorfont">
+		<fgffile name="graphics/fonts/regularbold.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="titlefont">
+		<fgffile name="graphics/fonts/title.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="systemfont">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#660066" />
+	</font>
+
+	<font name="oocfont">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#005500" />
+	</font>
+
+	<font name="msgfont">
+		<fgffile name="graphics/fonts/regularbold.fgf" />
+		<color value="#660066" />
+	</font>
+
+	<font name="emotefont">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#880000" />
+	</font>
+
+	<font name="draglabel">
+		<fgffile name="graphics/fonts/draglabel.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="diemod">
+		<fgffile name="graphics/fonts/diemod.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="diemodsmall">
+		<fgffile name="graphics/fonts/diemodsmall.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="dieresult">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#ffffff" />
+	</font>
+
+	<font name="modcollector">
+		<fgffile name="graphics/fonts/diemod.fgf" />
+		<color value="#E7CDAC" />
+	</font>
+
+	<font name="modcollectorlabel">
+		<fgffile name="graphics/fonts/modcollectorlabel.fgf" />
+		<color value="#E7CDAC" />
+	</font>
+
+	<font name="hotkey">
+		<fgffile name="graphics/fonts/regular.fgf" />
+		<color value="#ffffff" />
+	</font>
+
+	<font name="defaultstringcontrol">
+		<fgffile name="graphics/fonts/control.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="defaultnumbercontrol">
+		<fgffile name="graphics/fonts/control.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="smallcontrol">
+		<fgffile name="graphics/fonts/smallcontrol.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="mini_name">
+		<fgffile name="graphics/fonts/smallcontrol.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="mini_name_selected">
+		<fgffile name="graphics/fonts/smallcontrolbold.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheetnumber">
+		<fgffile name="graphics/fonts/sheetnumber.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheetnumbersmall">
+		<fgffile name="graphics/fonts/sheetnumbersmall.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheettext">
+		<fgffile name="graphics/fonts/sheettext.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheettextsmall">
+		<fgffile name="graphics/fonts/sheettextsmall.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheettextblock">
+		<fgffile name="graphics/fonts/sheettextblock.fgf" />
+		<color value="#000000" />
+	</font>
+
+	<font name="sheetlabel">
+		<fgffile name="graphics/fonts/sheetlabel.fgf" />
+		<color value="#261A12" />
+	</font>
+
+	<font name="sheetlabelsmall">
+		<fgffile name="graphics/fonts/sheetlabelsmall.fgf" />
+		<color value="#261A12" />
+	</font>
+	
+	<font name="sheetlabelsmallbold">
+		<fgffile name="graphics/fonts/sheetlabelsmallbold.fgf" />
+		<color value="#261A12" />
+	</font>
+	
+	<font name="sheetlabelinline">
+		<fgffile name="graphics/fonts/sheetlabelsmall.fgf" />
+		<color value="#A08564" />
+	</font>
+	
+	<font name="gabriola">
+		<fgffile name="graphics/fonts/gabriola.fgf" />
+		<color value="#261A12" />
+	</font>
+	
+</root>

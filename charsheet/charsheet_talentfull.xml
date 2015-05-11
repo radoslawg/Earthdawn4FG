@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+
+	<windowclass name="talentfull">
+		<frame>recordsheet</frame>
+		<placement>
+			<size height="360" width="375" />
+		</placement>
+		<sizelimits>
+			<minimum width="370" height="375" />
+			<maximum width="370" height="375" />
+		</sizelimits>        
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+            <sub_record_header name="header">
+                <class>talent_header</class>
+            </sub_record_header>            
+			<ref_contentframe/>
+			
+
+			<labeledstring name="attribname">
+				<anchored to="contentframe" position="insidetopleft" offset="5,5" width="75"/>
+				<label>attribute</label>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+			</labeledstring>
+
+			<stringcontrol name="statplus">
+				<anchored to="attribname" position="right" offset="5,0"/>
+				<static>+</static>
+			</stringcontrol>						
+			
+			<stringcontrol name="ranklabel">
+				<anchored to="statplus" position="right" offset="5,0"/>
+				<font>sheettext</font>
+				<static>Rank</static>
+			</stringcontrol>
+
+			<stringcontrol name="rankequal">
+				<anchored to="ranklabel" position="right" offset="5,0"/>
+				<static>=</static>
+			</stringcontrol>
+			
+			<stringcontrol name="steplabel">
+				<anchored to="rankequal" position="right" offset="5,0"/>
+				<font>sheettext</font>
+				<static>Step</static>
+			</stringcontrol>
+                       
+			<stringcontrol name="strainlabel">
+				<anchored to="steplabel" position="right" offset="25,0"/>
+				<font>sheettext</font>
+				<static>Strain</static>
+			</stringcontrol>
+            
+			<stringcontrol name="scnoteslabel">
+				<anchored to="strainlabel" position="right" offset="25,0"/>
+				<font>sheettext</font>
+				<static>Notes</static>
+			</stringcontrol>
+            
+			<modify_strain name="strain">
+				<anchored to="strainlabel" position="belowleft" offset="7,12" width="26"/>
+				<tabtarget>
+					<prev>rank</prev>
+					<next>disciplinename</next>
+				</tabtarget>
+			</modify_strain>
+
+			<notes_link name="talent_notes_shortcut">
+				<anchored to="scnoteslabel" position="below" offset="0,12"/>
+			</notes_link>
+			
+			<step_linked name="attribute">
+				<anchored to="attribname" position="belowleft" width="26" offset="20, 12"/>
+                <source/>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+			</step_linked>
+
+			<step_mod name="statmod">
+                <anchored to="attribute" position="insidebottomright" width="18" height="18" offset="-10, -7"/>			
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+			</step_mod>
+			
+			<stringcontrol name="attrplus">
+				<anchored to="statplus" position="below" offset="0,12"/>
+				<static>+</static>
+			</stringcontrol>
+			
+			<step_field name="rank">
+				<anchored to="attrplus" position="right" width="25" offset="7, 0"/>
+				<tabtarget>
+					<prev>attribute</prev>
+					<next>strain</next>
+				</tabtarget>
+			</step_field>
+
+			<stringcontrol name="rankequal2">
+				<anchored to="rankequal" position="below" offset="0,12"/>/>
+				<static>=</static>
+			</stringcontrol>
+			
+	
+			<step_roll name="step" source="step.total">
+				<anchored to="rankequal2" position="right" width="25" offset="7, 0"/>
+				<readonly />
+				<source>
+					<name>attribute</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>rank</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>statmod</name>
+					<op>+</op>
+				</source>
+				<modifierfield>step.total.temp</modifierfield>
+			</step_roll>		
+
+   			<stringcontrol name="actionlabel">
+				<anchored to="attribname" position="belowleft" offset="0,45"/> 
+				<font>sheetlabelsmall</font>
+				<static>Action:</static>
+			</stringcontrol>            
+
+			<action_cycler name="action">
+				<anchored to="actionlabel" position="rightlow" offset="5,0"/>
+			</action_cycler>
+            
+			<stringcontrol name="skilluselabel">
+				<anchored to="action" position="right" offset="10,0"/>
+				<font>sheetlabelsmall</font>
+				<static>Skill Use:</static>
+			</stringcontrol>
+
+			<skilluse_cycler name="skilluse">
+				<anchored to="skilluselabel" position="rightlow" offset="5,0"/>
+			</skilluse_cycler>
+            
+			<stringcontrol name="disclabel">
+				<anchored to="skilluse" position="right" offset="5,0"/>
+				<font>sheetlabelsmall</font>
+				<static>Discipline Talent:</static>
+			</stringcontrol>
+
+			<checkbox name="discipline">
+				<anchored to="disclabel" position="right" offset="5,0"/>
+			</checkbox>
+			
+			<labeledstring name="disciplinename">
+				<anchored to="actionlabel" position="belowleft" offset="0,5" width="150"/> 
+				<label>discipline</label>
+				<tabtarget>
+					<prev>strain</prev>
+					<next>circle</next>
+				</tabtarget>
+			</labeledstring>
+
+			<labeledstring name="circle">
+				<anchored to="disciplinename" position="right" offset="10,0" width="30"/>
+				<label>circle</label>
+				<center />
+				<tabtarget>
+					<prev>disciplinename</prev>
+					<next>description</next>
+				</tabtarget>
+			</labeledstring>
+
+			<stringcontrol name="descriptionlabel">
+				<anchored to="disciplinename" position="belowleft" offset="0,10"/>
+				<font>sheettext</font>
+				<static>Description</static>
+				<center/>
+			</stringcontrol>
+            
+			<record_description/>
+			<record_scrollbar_description/>
+			
+			<resize_recordsheet />
+			<close_recordsheet />			
+		</sheetdata>
+	</windowclass><!--}}}-->
+	
+	<windowclass name="talent_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<anchor_record_header_right />
+
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="5" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+			</string_record_name>
+		</sheetdata>
+	</windowclass>	
+
+</root>

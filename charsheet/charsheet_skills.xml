@@ -1,0 +1,1071 @@
+<!-- vim: set tabstop=4 shiftwidth=4 foldmethod=marker commentstring=\<\!--\%s--\>: -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+
+	<windowclass name="charsheet_skills">
+		<placement>
+			<size>
+				<width>252</width>
+				<height>611</height>
+			</size>
+		</placement>
+		<nodelete />
+		<sheetdata>
+<!-- Skills --><!--{{{-->
+			<genericcontrol name="skillframe">
+				<bounds>15,50,480,380</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			
+			<stringcontrol name="skilllabel">
+				<anchored>
+					<to>skillframe</to>
+					<position>above</position>
+					<offset>-222,-8</offset>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+				<offset>5,5,5,5</offset>
+				</frame>
+				<font>titlefont</font>
+				<static>Skills</static>
+				<center />
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>10,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Circle</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>40,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Name</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>150,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Rank</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>180,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Attr</static>
+			</stringcontrol>
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>210,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Step</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>240,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>K</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>260,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Action</static>
+			</stringcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>330,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Cost</static>
+			</stringcontrol>			
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>380,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Strain</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>413,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Ful:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>skillframe</to>
+					<position>insidetopleft</position>
+					<offset>437,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Notes:</static>
+			</stringcontrol>
+			
+			<windowlist name="skilllist">
+				<bounds>30,75,475,345</bounds>
+				<datasource>.skills</datasource>
+				<class>skill_listitem</class>
+				<allowcreate />
+				<allowdelete />
+				<skipempty />
+				<script>
+					function onSortCompare(w1, w2)
+						local returnValue = false;
+												
+						local circle1 = tonumber(w1.circle.getValue());
+						local circle2 = tonumber(w2.circle.getValue());
+						
+						if circle1 == nil then
+							circle1 = 0;
+						end
+						if circle2 == nil then
+							circle2 = 0;
+						end
+							
+ 
+						if circle1 == circle2 then
+							returnValue = w1.name.getValue() &gt; w2.name.getValue();
+						else
+							returnValue = circle1 &gt; circle2;
+						end
+ 
+						return returnValue;
+					end
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							local class, datasource = draginfo.getShortcutData();
+							local source = draginfo.getDatabaseNode();
+
+							if source and class == "reftalentfull" then
+								local newentry = addCustomTal_Skill(source);
+							elseif source and class == "refskillfull" then
+								local newentry = addCustomSkill(source);
+							else
+								return nil;
+							end
+							return true;
+						end
+					end
+
+					function addCustomTal_Skill(source)
+						local skilluse = source.createChild("skilluse", "string").getValue();
+						Debug.console(skilluse);
+						if skilluse ~= "" and skilluse ~= "No" then
+							local newentry = createWindow();
+							newentry.name.setValue(source.createChild("name", "string").getValue());
+							local newnode = newentry.getDatabaseNode();
+							newnode.createChild("attribname", "string").setValue(source.createChild("attribname", "string").getValue());
+							newnode.createChild("description", "formattedtext").setValue(source.createChild("detailtext", "formattedtext").getValue());
+							newnode.createChild("action", "string").setValue(source.createChild("action", "string").getValue());
+							newnode.createChild("skilluse", "string").setValue(skilluse);
+							newnode.createChild("strain", "number").setValue(source.createChild("strain", "number").getValue());
+							newnode.createChild("knowledge", "number").setValue(0);
+						end
+					end
+
+					function addCustomSkill(source)
+						local newentry = createWindow();
+						newentry.name.setValue(source.createChild("name", "string").getValue());
+						local newnode = newentry.getDatabaseNode();
+						local skilluse = source.createChild("action", "string").getValue()
+						newnode.createChild("attribname", "string").setValue(source.createChild("attribname", "string").getValue());
+						newnode.createChild("description", "formattedtext").setValue(source.createChild("detailtext", "formattedtext").getValue());
+						newnode.createChild("action", "string").setValue(source.createChild("action", "string").getValue());
+						newnode.createChild("knowledge", "number").setValue(source.createChild("knowledge", "number").getValue());
+						newnode.createChild("skilluse", "string").setValue(skilluse);
+						newnode.createChild("strain", "number").setValue(source.createChild("strain", "number").getValue());
+					end
+
+				</script>
+			</windowlist>
+            <scrollbar>
+				<target>skilllist</target>
+                <anchored to="skilllist" />                
+            </scrollbar>			
+<!-- LANGUAGES --><!--{{{-->
+			<genericcontrol name="languageframe">
+				<bounds>15,430,480,170</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="languagelabel">
+				<anchored>
+					<to>languageframe</to>
+					<position>above</position>
+					<offset>-200,-8</offset>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+				<offset>3,5,3,5</offset>
+				</frame>
+				<font>titlefont</font>
+				<static>Languages</static>
+				<center />
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>15,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Language:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>150,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Rank:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>180,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Perc:</static>
+			</stringcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>210,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Step:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>245,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>S:</static>
+			</stringcontrol>
+			
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>260,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>R/W:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>languageframe</to>
+					<position>insidetopleft</position>
+					<offset>290,12</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Notes:</static>
+			</stringcontrol>
+
+			<windowlist name="languagelist">
+				<bounds>30,455,475,135</bounds>
+				<datasource>.languages</datasource>
+				<class>language_listitem</class>
+				<allowcreate />
+				<allowdelete />
+				<skipempty />
+				<script>
+					function onSortCompare(w1, w2)
+						local returnValue = false;
+						returnValue = w1.language.getValue() &gt; w2.language.getValue();
+						return returnValue;
+					end
+
+				</script>
+			</windowlist>
+            <scrollbar>
+				<target>languagelist</target>
+                <anchored to="languagelist" />                
+            </scrollbar>			
+<!--}}}-->
+		</sheetdata>
+	</windowclass>
+	
+<!-- SKILL LIST ITEM -->	<!--{{{-->
+	<windowclass name="skill_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+		
+			<textlistitemvalue name="circle">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>name</next>
+					<prev>disciplinename</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<textlistitemvalue name="name">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>disciplinename</next>
+					<prev>circle</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onDoubleClick()
+						win = Interface.openWindow("talentfull",window.getDatabaseNode());
+					end
+
+				</script>
+			</textlistitemvalue>
+            
+            <stringfield name="attribname">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+                <invisible/>
+                <script file="scripts/statmodifier.lua" />
+           
+            </stringfield>
+			
+			<numberfield name="rank">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>135</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+					function onValueChanged()
+						if window.name.getValue() == "Willforce" then
+							window.windowlist.window.getDatabaseNode().getChild("willforce.step.base").setValue(getValue() + window.statmod.getValue());
+						end
+					end
+				</script>
+				<readonly />
+			</numberfield>
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>156</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>+</static>
+			</stringcontrol>
+			
+			<step_linked name="attribute">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<readonly />
+				<invisible />
+			</step_linked>
+            
+			<numberfield name="statmod">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<readonly />
+				<invisible />
+			</numberfield>
+			<step_linked name="attributetmp">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<source>
+					<name>attribute</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>statmod</name>
+					<op>+</op>
+				</source>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+				</script>
+				<readonly />
+			</step_linked>
+			
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>186</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>=</static>
+			</stringcontrol>
+			
+			<step_linked_modifier_roll name="step" source="step.total">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>195</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<readonly />
+				<source>
+					<name>attributetmp</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>rank</name>
+					<op>+</op>
+				</source>
+				<modifierfield>step.total.temp</modifierfield>
+			</step_linked_modifier_roll>
+
+			<checkbox name="knowledge">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>221</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onClickDown()
+						return false;
+					end
+				</script>
+				<tooltip>
+					<text>Knowledge Skill</text>
+				</tooltip>
+			</checkbox>
+			
+			<action_cycler name="action">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>234</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					
+				</anchored>
+				<tooltip>
+					<text>Action</text>
+				</tooltip>
+				<readonly/>
+			</action_cycler>			
+			
+			<skilluse_cycler name="skilluse">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>295</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					
+				</anchored>
+				<tooltip>
+					<text>Skill Use Cost</text>
+				</tooltip>
+				<readonly/>
+			</skilluse_cycler>					
+
+			<modify_strain name="strain">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>370</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<readonly />
+			</modify_strain>
+			
+			<buttoncontrol name="fullskill">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("skillfull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowreferencefield name="skill_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+
+				
+		</sheetdata>
+	</windowclass><!--}}}-->
+	
+<!-- LANGUAGE LIST ITEM -->	<!--{{{-->
+	<windowclass name="language_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+		
+			<textlistitemvalue name="language">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>130</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>miscnotes</next>
+					<prev>miscnotes</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+					function onDoubleClick()
+						win = Interface.openWindow("languagefull",window.getDatabaseNode());
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<numberfield name="rank">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>135</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+				</script>
+				<readonly />
+			</numberfield>
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>156</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>+</static>
+			</stringcontrol>
+			
+			<numberfield name="attribute" source="...attributes.perception.step">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+				</script>
+				<readonly />
+			</numberfield>
+			
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>186</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>=</static>
+			</stringcontrol>
+			
+			<modifiernumber name="step" source="step.total">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>195</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetnumber</font>
+				<readonly />
+				<source>
+					<name>...attributes.perception.step</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>rank</name>
+					<op>+</op>
+				</source>
+				<modifierfield>step.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription(window.language.getValue() .. " (Step " .. getValue() .. ")" );
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, window.language.getValue() .. " (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							setFrame("sheetfocus", 3, 3, 3, 3);
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 3, 3, 3, 3);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber>
+
+			<checkbox name="spoken">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>227</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onClickDown()
+						return false;
+					end
+				</script>
+				<tooltip>
+					<text>Spoken</text>
+				</tooltip>
+			</checkbox>
+			
+			<checkbox name="readwrite">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>248</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onClickDown()
+						return false;
+					end
+				</script>
+				<tooltip>
+					<text>Read/Write</text>
+				</tooltip>
+			</checkbox>
+			
+			
+			<textlistitemvalue name="miscnotes">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>275</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>120</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>language</next>
+					<prev>language</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+			</textlistitemvalue>
+
+			<buttoncontrol name="fulllanguage">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("languagefull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowreferencefield name="language_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+
+				
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+</root>

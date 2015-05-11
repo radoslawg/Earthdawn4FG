@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	
+	<windowclass name="item"><!--{{{-->
+		<datasource>item</datasource>
+		<frame>charsheet</frame>
+		<placement>
+			<size>
+				<width>270</width>
+				<height>400</height>
+			</size>
+		</placement>
+		<sizelimits>
+			<dynamic />
+			<minimum>
+				<width>285</width>
+				<height>383</height>
+			</minimum>
+		</sizelimits>
+		<minimize>minimized_item</minimize>
+		<sharable />
+		<tooltip>
+			<field>name</field>
+		</tooltip>
+		<sheetdata>
+			<!-- NAME --><!--{{{-->
+			<genericcontrol name="nameframe">
+				<bounds>10,20,-20,35</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			<windowopencontrol>
+				<anchored>
+					<to>nameframe</to>
+					<position>insidetopleft</position>
+					<offset>13,8</offset>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<class>item</class>
+				<description>
+					<field>name</field>
+				</description>
+			</windowopencontrol>
+			<stringfield name="name">
+				<anchored>
+					<top>
+						<parent>nameframe</parent>
+						<anchor>top</anchor>
+						<offset>9</offset>
+					</top>
+					<left>
+						<parent>nameframe</parent>
+						<anchor>left</anchor>
+						<offset>35</offset>
+					</left>
+					<right>
+						<parent>nameframe</parent>
+						<anchor>right</anchor>
+						<offset>-15</offset>
+					</right>
+				</anchored>
+				<empty>&#171; New Item &#187;</empty>
+				<font>sheettext</font>
+			</stringfield><!--}}}-->
+
+			<!-- Frame -->		<!--{{{-->
+			<genericcontrol name="tabcontentframe">
+				<bounds>10,54,-25,-13</bounds>
+				<frame>
+					<name>sheetgroup</name>
+					<offset>0,1,0,0</offset>
+				</frame>
+			</genericcontrol> <!--}}}-->
+
+			<subwindow name="mainitem">
+					<anchored>
+						<to>tabcontentframe</to>
+						<position>over</position>
+						<offset>0,0</offset>
+					</anchored>
+					<class>gmitemmain</class>
+			</subwindow>
+			<subwindow name="threaditem">
+					<anchored>
+						<to>tabcontentframe</to>
+						<position>over</position>
+						<offset>0,0</offset>
+					</anchored>
+					<class>gmitemthreads</class>
+			</subwindow>
+			<subwindow name="propitem">
+					<anchored>
+						<to>tabcontentframe</to>
+						<position>over</position>
+						<offset>0,0</offset>
+					</anchored>
+					<class>gmitemprops</class>
+			</subwindow>
+	
+			<tabcontrol name="tabs">
+				<bounds>-22,50,18,223</bounds>
+				<tab>
+					<icon>tab_main</icon>
+					<subwindow>propitem</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>mainitem</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_threads</icon>
+					<subwindow>threaditem</subwindow>
+				</tab>
+				<activate>1</activate>
+			</tabcontrol>
+ 			<closebutton_charsheetmini />
+			
+			</sheetdata>
+
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemmain"><!--{{{-->
+		<sheetdata>
+			<genericcontrol name="frame">
+				<bounds>0,0,-1,-1</bounds>
+			</genericcontrol>
+
+			<formattedtextfield name="text">
+				<anchored>
+					<position>over</position>
+					<offset>-10,-10</offset>
+					<to>frame</to>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<left>
+						<anchor>left</anchor>
+					</left>
+					<right>
+						<anchor>right</anchor>
+					</right>
+				</anchored>
+				<font>
+					<normal>chatfont</normal>
+					<bold>narratorfont</bold>
+					<italic>chatitalicfont</italic>
+					<bolditalic>chatbolditalicfont</bolditalic>
+					<title>defaultstringcontrol</title>
+				</font>
+				<linkicon>
+					<link>button_openwindow</link>
+					<emptylink>button_emptytarget</emptylink>
+				</linkicon>
+				<selectioncolor>#FFD296</selectioncolor>
+				<footer>footer_narrow</footer>
+				<empty>Click to enter description</empty>
+			</formattedtextfield>
+            <scrollbar>
+				<target>text</target>
+                <anchored to="text" />                
+            </scrollbar>			
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemthreads"><!--{{{-->
+		<sheetdata>
+
+			<stringcontrol name="maxthreadslabel">
+				<bounds>11,27,65,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>Max Threads</static>
+			</stringcontrol>
+
+			<numberfield name="maxthreads">
+				<bounds>23,10,35,20</bounds>
+				<frame>
+					<name>textline</name>
+					<offset>1,-2,1,1</offset>
+				</frame>
+				<font>sheettext</font>
+				<tabtarget>
+					<prev>name</prev>
+					<next>valuesp</next>
+				</tabtarget>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+				</script>
+			</numberfield>
+
+			<stringcontrol name="spelldeflabel">
+				<bounds>165,27,75,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>Spell Defense</static>
+			</stringcontrol>
+
+			<numberfield name="spelldefense">
+				<bounds>184,10,35,20</bounds>
+				<frame>
+					<name>textline</name>
+					<offset>1,-2,1,1</offset>
+				</frame>
+				<font>sheettext</font>
+				<tabtarget>
+					<prev>name</prev>
+					<next>valuesp</next>
+				</tabtarget>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+				</script>
+			</numberfield>
+
+
+<!-- THREADS --><!--{{{-->
+			<genericcontrol name="threadframe">
+				<bounds>15,44,100,287</bounds>
+			</genericcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>threadframe</to>
+					<position>insidetopleft</position>
+					<offset>0,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Rank:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>threadframe</to>
+					<position>insidetopleft</position>
+					<offset>30,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Effect:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>threadframe</to>
+					<position>insidetopleft</position>
+					<offset>185,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Full:</static>
+			</stringcontrol>
+			
+			
+			<windowlist name="threadlist">
+				<bounds>0,54,250,270</bounds>
+				<datasource>.threads</datasource>
+				<class>gmitemthreads_listitem</class>
+				<allowcreate />
+				<allowdelete />
+				<script>
+					function onSortCompare(w1, w2)
+						local returnValue = false;
+												
+						local rank1 = tonumber(w1.rank.getValue());
+						local rank2 = tonumber(w2.rank.getValue());
+						
+						if rank1 == nil then
+							rank1 = 0;
+						end
+						if rank2 == nil then
+							rank2 = 0;
+						end
+							
+ 
+						if rank1 == rank2 then
+							returnValue = w1.effect.getValue() &gt; w2.effect.getValue();
+						else
+							returnValue = rank1 &gt; rank2;
+						end
+ 
+						return returnValue;
+					end
+				</script>
+			</windowlist>
+            <scrollbar>
+				<target>threadlist</target>
+                <anchored to="threadlist" />                
+            </scrollbar>			
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemthreads_listitem"> <!--{{{-->
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<textlistitemnumber name="rank">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>15</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>range</prev>
+					<next>name</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+					function onDoubleClick()
+						win = Interface.openWindow("gmitemthreadfull",window.getDatabaseNode());
+					end
+				</script>
+			</textlistitemnumber>
+			<checkbox name="effectknowncheckbox">
+				<bounds>140,221,25,25</bounds>
+				<checked />
+				<invisible />
+			</checkbox>
+			<textlistitemvalue name="effect">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>45</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>150</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>numthreads</next>
+					<prev>circle</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+					function onDoubleClick()
+						win = Interface.openWindow("gmitemthreadfull",window.getDatabaseNode());
+					end
+					function onInit()
+						if window.effectknowncheckbox.getState() == true or User.isHost() then
+							print("effectknowncheckbox = true for " .. window.effect.getValue());
+							window.effect.setVisible(true);
+						else
+							print("effectknowncheckbox = false for " .. window.effect.getValue());
+							window.effect.setVisible(false);
+						end
+					end
+				</script>
+			</textlistitemvalue>
+
+			<buttoncontrol name="gmitemfullthread">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>200</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("gmitemthreadfull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemprops"><!--{{{-->
+		<sheetdata>
+
+<!-- PROPS --><!--{{{-->
+			<genericcontrol name="propframe">
+				<bounds>15,10,100,287</bounds>
+			</genericcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>propframe</to>
+					<position>insidetopleft</position>
+					<offset>0,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Property:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>propframe</to>
+					<position>insidetopleft</position>
+					<offset>175,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Value:</static>
+			</stringcontrol>
+			
+			
+			<windowlist name="proplist">
+				<bounds>0,20,250,309</bounds>
+				<datasource>.props</datasource>
+				<class>gmitemprops_listitem</class>
+				<allowcreate />
+				<allowdelete />
+			</windowlist>
+            <scrollbar>
+				<target>proplist</target>
+                <anchored to="proplist" />                
+            </scrollbar>			
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemprops_listitem"> <!--{{{-->
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<textlistitemvalue name="property">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>15</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>160</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>value</next>
+					<prev>value</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+				function onEnter()
+					local new = window.windowlist.createWindow();
+					new[getName()].setFocus();
+					onNavigateDown();
+				end
+				</script>
+			</textlistitemvalue>
+
+			<textlistitemvalue name="value">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>185</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>40</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>property</prev>
+					<next>property</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+				function onEnter()
+					local new = window.windowlist.createWindow();
+					new[getName()].setFocus();
+					onNavigateDown();
+				end
+				</script>
+			</textlistitemvalue>
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmitemthreadfull"><!--{{{-->
+		<frame>referencebox</frame>
+		<placement>
+			<size>
+				<height>350</height>
+				<width>250</width>
+			</size>
+		</placement>
+		<sheetdata>
+			<stringfield name="name">
+				<bounds>20,17,210,25</bounds>
+				<font>titlefont</font>
+				<frame>
+					<name>sheetgroup</name>
+				<offset>10,7,3,-1</offset>
+				</frame>
+				<center />
+				<script>
+					function onInit()
+						setValue(window.getDatabaseNode().getParent().getParent().getChild("name").getValue());
+					end
+				</script>
+			</stringfield>
+
+			<labelednumber name="rank">
+				<bounds>15,36,25,20</bounds>
+				<label>Rank</label>
+				<center />
+				<tabtarget>
+					<prev>disciplinename</prev>
+					<next>numgmitemthreads</next>
+				</tabtarget>
+			</labelednumber>
+
+			<stringcontrol name="questionlabel">
+				<bounds>65,40,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Test Knowledge</static>
+			</stringcontrol>
+
+			<checkbox name="question">
+				<bounds>45,34,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						setState(not getState());
+						if window.question.getState() ~= false then
+							window.answer.setState(0);
+							window.question.updateDisplay(true, false);
+						else
+							window.answer.setState(1);
+							window.question.updateDisplay(false, true);
+						end
+					end
+					function updateDisplay(question, answer)
+						window.keylabel.setVisible(question);
+						window.patternlabel.setVisible(answer);
+						window.keyframe.setVisible(question);
+						window.patternframe.setVisible(answer);
+						window.keyknowncheckbox.setVisible(question);
+						window.patternknowncheckbox.setVisible(answer);
+						window.patternframe.setVisible(answer);
+						if window.keyknowncheckbox.getState() == true or User.isHost() then
+							window.keydescription.setVisible(question);
+						else
+							window.keydescription.setVisible(false);
+						end
+						if window.patternknowncheckbox.getState() == true or User.isHost() then
+							window.patterndescription.setVisible(answer);
+						else
+							window.patterndescription.setVisible(false);
+						end
+
+						window.effectlabel.setVisible(question);
+						window.deedlabel.setVisible(answer);
+						window.effectframe.setVisible(question);
+						window.deedframe.setVisible(answer);
+						window.effectknowncheckbox.setVisible(question);
+						window.deedknowncheckbox.setVisible(answer);
+						window.deedrequired.setVisible(answer);
+						window.deedrequiredlabel.setVisible(answer);
+						if window.effectknowncheckbox.getState() == true or User.isHost() then
+							window.effect.setVisible(question);
+						else
+							window.effect.setVisible(false);
+						end
+						if (window.deedknowncheckbox.getState() == true and window.deedrequired.getState() == true) or User.isHost() then
+							window.deeddescription.setVisible(answer);
+						else
+							window.deeddescription.setVisible(false);
+						end
+					end
+					function onInit() 
+						super.onInit();
+						if window.question.getState() ~= false then
+							window.question.updateDisplay(true, false);
+						else
+							window.question.updateDisplay(false, true);
+						end
+					end
+				</script>
+				<checked />
+			</checkbox>
+
+			<stringcontrol name="answerlabel">
+				<bounds>65,52,95,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Research Knowledge</static>
+			</stringcontrol>
+			<checkbox name="answer">
+				<bounds>45,46,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						setState(not getState());
+						if window.answer.getState() ~= false then
+							window.question.setState(0);
+							window.question.updateDisplay(false, true);
+						else 
+							window.question.setState(1);
+							window.question.updateDisplay(true, false);
+						end
+					end
+				</script>
+			</checkbox>
+
+	
+
+			<labelednumber name="cost">
+				<bounds>175,36,45,20</bounds>
+				<label>Cost</label>
+				<center />
+				<tabtarget>
+					<prev>disciplinename</prev>
+					<next>numgmitemthreads</next>
+				</tabtarget>
+			</labelednumber>
+
+			<stringcontrol name="keylabel"><!--{{{-->
+				<bounds>15,65,95,20</bounds>
+				<font>sheetlabel</font>
+				<static>Test Knowledge:</static>
+			</stringcontrol>
+			<genericcontrol name="keyframe">
+				<bounds>5,60,235,180</bounds>
+			</genericcontrol>
+			<stringcontrol name="knownlabel">
+				<bounds>160,67,95,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Known?</static>
+			</stringcontrol>
+			<checkbox name="keyknowncheckbox">
+				<bounds>140,61,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						if User.isHost() then
+							setState(not getState());
+						end
+					end
+					function onInit()
+						super.onInit();
+						if (window.keyknowncheckbox.getState() == true or User.isHost()) and window.keyframe.isVisible() == true then
+							window.keydescription.setVisible(true);
+						else 
+							window.keydescription.setVisible(false);
+						end
+					end
+					function onValueChanged()
+						if (window.keyknowncheckbox.getState() == true or User.isHost()) and window.keyframe.isVisible() == true then
+							window.keydescription.setVisible(true);
+						else 
+							window.keydescription.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox>
+			<stringfield name="keydescription">
+				<anchored>
+					<to>keyframe</to>
+					<position>over</position>
+					<offset>-14,-19</offset>
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<font>sheettext</font>
+				<frame>
+					<name>textline</name>
+					<offset>2,0,2,0</offset>
+				</frame>
+				<tabtarget>
+					<prev>effecttext</prev>
+					<next>name</next>
+				</tabtarget>
+			</stringfield><!--}}}-->
+			<stringcontrol name="patternlabel"><!--{{{-->
+				<bounds>15,65,145,30</bounds>
+				<font>sheetlabel</font>
+				<static>Research Knowledge:</static>
+				<invisible />
+			</stringcontrol>
+			<genericcontrol name="patternframe">
+				<bounds>5,60,235,180</bounds>
+				<invisible />
+			</genericcontrol>
+			<checkbox name="patternknowncheckbox">
+				<bounds>140,61,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						if User.isHost() then
+							setState(not getState());
+						end
+					end
+					function onInit()
+						super.onInit();
+						if (window.patternknowncheckbox.getState() == true or User.isHost()) and window.patternframe.isVisible() == true then
+							window.patterndescription.setVisible(true);
+						else 
+							window.patterndescription.setVisible(false);
+						end
+					end
+					function onValueChanged()
+						if (window.patternknowncheckbox.getState() == true or User.isHost()) and window.patternframe.isVisible() == true then
+							window.patterndescription.setVisible(true);
+						else 
+							window.patterndescription.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox>
+			<stringfield name="patterndescription">
+				<anchored>
+					<to>patternframe</to>
+					<position>over</position>
+					<offset>-14,-19</offset>
+				</anchored>
+				<invisible />
+				<multilinespacing>20</multilinespacing>
+				<font>sheettext</font>
+				<frame>
+					<name>textline</name>
+					<offset>2,0,2,0</offset>
+				</frame>
+				<tabtarget>
+					<prev>effecttext</prev>
+					<next>name</next>
+				</tabtarget>
+			</stringfield><!--}}}-->
+			<stringcontrol name="deedlabel"><!--{{{-->
+				<bounds>15,225,95,20</bounds>
+				<font>sheetlabel</font>
+				<static>Deed:</static>
+				<invisible />
+			</stringcontrol>
+			<genericcontrol name="deedframe">
+				<bounds>5,220,235,140</bounds>
+				<invisible />
+			</genericcontrol>
+			<stringcontrol name="deedrequiredlabel">
+				<bounds>100,227,95,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Reqired?</static>
+				<invisible />
+			</stringcontrol>
+			<checkbox name="deedrequired">
+				<bounds>80,221,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						if User.isHost() then
+							setState(not getState());
+							if window.deedrequired.getState() == false then
+								window.deedknowncheckbox.setState(0);
+							end
+						end
+					end
+					function onInit()
+						super.onInit();
+						if ((window.deedknowncheckbox.getState() == true and window.deedrequired.getState() == true ) or User.isHost()) and window.deedframe.isVisible() == true then
+							window.deeddescription.setVisible(true);
+						else 
+							window.deeddescription.setVisible(false);
+						end
+					end
+					function onValueChanged()
+						if ((window.deedknowncheckbox.getState() == true and window.deedrequired.getState() == true) or User.isHost()) and window.deedframe.isVisible() == true then
+							window.deeddescription.setVisible(true);
+						else 
+							window.deeddescription.setVisible(false);
+						end
+					end
+				</script>
+				<invisible />
+			</checkbox>
+			<checkbox name="deedknowncheckbox">
+				<bounds>140,221,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						if User.isHost() then
+							setState(not getState());
+						end
+					end
+					function onInit()
+						super.onInit();
+						if ((window.deedknowncheckbox.getState() == true and window.deedrequired.getState() == true) or User.isHost()) and window.deedframe.isVisible() == true then
+							window.deeddescription.setVisible(true);
+						else 
+							window.deeddescription.setVisible(false);
+						end
+					end
+					function onValueChanged()
+						if ((window.deedknowncheckbox.getState() == true and window.deedrequired.getState() == true) or User.isHost()) and window.deedframe.isVisible() == true then
+							window.deeddescription.setVisible(true);
+						else 
+							window.deeddescription.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox>
+			<stringfield name="deeddescription">
+				<anchored>
+					<to>deedframe</to>
+					<position>over</position>
+					<offset>-14,-19</offset>
+				</anchored>
+				<invisible />
+				<multilinespacing>20</multilinespacing>
+				<font>sheettext</font>
+				<frame>
+					<name>textline</name>
+					<offset>2,0,2,0</offset>
+				</frame>
+				<tabtarget>
+					<prev>effecttext</prev>
+					<next>name</next>
+				</tabtarget>
+			</stringfield><!--}}}-->
+			<stringcontrol name="effectlabel"><!--{{{-->
+				<bounds>15,225,95,30</bounds>
+				<font>sheetlabel</font>
+				<static>Effect:</static>
+			</stringcontrol>
+			<genericcontrol name="effectframe">
+				<bounds>5,220,235,140</bounds>
+			</genericcontrol>
+			<stringcontrol name="knownlabel">
+				<bounds>160,227,95,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Known?</static>
+			</stringcontrol>
+			<checkbox name="effectknowncheckbox">
+				<bounds>140,221,25,25</bounds>
+				<script>
+					function onClickDown(button, x, y)
+						if User.isHost() then
+							setState(not getState());
+						end
+					end
+					function onInit()
+						super.onInit();
+						if (window.effectknowncheckbox.getState() == true or User.isHost()) and window.effectframe.isVisible() == true then
+							window.effect.setVisible(true);
+						else 
+							window.effect.setVisible(false);
+						end
+					end
+					function onValueChanged()
+						if (window.effectknowncheckbox.getState() == true or User.isHost()) and window.effectframe.isVisible() == true then
+							window.effect.setVisible(true);
+						else 
+							window.effect.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox>
+			<stringfield name="effect">
+				<anchored>
+					<to>effectframe</to>
+					<position>over</position>
+					<offset>-14,-19</offset>
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<font>sheettext</font>
+				<frame>
+					<name>textline</name>
+					<offset>2,0,2,0</offset>
+				</frame>
+				<tabtarget>
+					<prev>effecttext</prev>
+					<next>name</next>
+				</tabtarget>
+			</stringfield><!--}}}-->
+
+ 			<closebutton_charsheet />
+			
+		</sheetdata>
+	</windowclass><!--}}}-->
+		
+
+
+
+
+</root>

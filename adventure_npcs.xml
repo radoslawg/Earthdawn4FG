@@ -1,0 +1,2211 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<template name="npctoplabel"><!--{{{-->
+		<stringcontrol>
+			<font>sheetlabelsmall</font>
+			<center />
+			<script>
+				function onInit()
+					if anchor then
+						setAnchor("bottom", anchor[1], "top", "absolute", 2);
+						setAnchor("left", anchor[1], "left", "absolute", 0);
+						setAnchor("right", anchor[1], "right", "absolute", 0);
+					end
+				end
+			</script>
+		</stringcontrol>
+	</template><!--}}}-->
+	
+	<windowclass name="npc_combat"><!--{{{-->
+		<datasource>npc</datasource>
+		<sheetdata>
+			<stringcontrol name="dexsteplabel"> <!--{{{-->
+				<bounds>30,5,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>DEX:</static>
+			</stringcontrol>
+			<stepcontrol_field name="dexstep">
+				<anchored>
+					<to>dexsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+						setFrame("sheetfocus", 2, 2, 2, 2);
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+						setFrame("modifier", 2, 2, 2, 2);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Dexterity (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Dexterity (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="strsteplabel"> <!--{{{-->
+				<bounds>105,5,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>STR:</static>
+			</stringcontrol>
+			<stepcontrol_field name="strstep">
+				<anchored>
+					<to>strsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Strength (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Strength (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="tousteplabel"> <!--{{{-->
+				<bounds>185,5,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>TOU:</static>
+			</stringcontrol>
+			<stepcontrol_field name="toustep">
+				<anchored>
+					<to>tousteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Toughness (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Toughness (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+
+			<stringcontrol name="persteplabel"> <!--{{{-->
+				<bounds>30,25,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>PER:</static>
+			</stringcontrol>
+			<stepcontrol_field name="perstep">
+				<anchored>
+					<to>persteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+						setFrame("sheetfocus", 2, 2, 2, 2);
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+						setFrame("modifier", 2, 2, 2, 2);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Perception (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Perception (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="wilsteplabel"> <!--{{{-->
+				<bounds>105,25,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>WIL:</static>
+			</stringcontrol>
+			<stepcontrol_field name="wilstep">
+				<anchored>
+					<to>wilsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Willpower (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Willpower (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="chasteplabel"> <!--{{{-->
+				<bounds>185,25,20,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>CHA:</static>
+			</stringcontrol>
+			<stepcontrol_field name="chastep">
+				<anchored>
+					<to>chasteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Charisma (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Charisma (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+
+
+			<stringcontrol name="initsteplabel"> <!--{{{-->
+				<bounds>0,50,45,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Initiative:</static>
+			</stringcontrol>
+			<stepcontrol_field name="init.step.total">
+				<anchored>
+					<to>initsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Initiative (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Initiative (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="noalabel"> <!--{{{-->
+				<bounds>0,70,90,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Number of Attacks:</static>
+			</stringcontrol>
+			<numberfield name="noa">
+				<anchored>
+					<to>noalabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="attacksteplabel"> <!--{{{-->
+				<bounds>0,90,30,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Attack:</static>
+			</stringcontrol>
+			<stepcontrol_field name="attackstep">
+				<anchored>
+					<to>attacksteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Attack (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Attack (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stepcontrol_field name="attackstep1"> <!--{{{--> 
+				<anchored>
+					<to>attackstep</to>
+					<position>righthigh</position>
+					<offset>2,0</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Attack (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Attack (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stepcontrol_field name="attackstep2"> <!--{{{-->
+				<anchored>
+					<to>attackstep1</to>
+					<position>righthigh</position>
+					<offset>2,0</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Attack (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Attack (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="damagesteplabel"> <!--{{{-->
+				<bounds>15,110,38,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Damage:</static>
+			</stringcontrol>
+			<stepcontrol_field name="damagestep">
+				<anchored>
+					<to>damagesteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Damage (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Damage (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stepcontrol_field name="damagestep1"> <!--{{{-->
+				<anchored>
+					<to>damagestep</to>
+					<position>righthigh</position>
+					<offset>2,0</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Damage (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Damage (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stepcontrol_field name="damagestep2"> <!--{{{-->
+				<anchored>
+					<to>damagestep1</to>
+					<position>righthigh</position>
+					<offset>2,0</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Damage (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Damage (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="noslabel"> <!--{{{-->
+				<bounds>0,130,90,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Number of Spells:</static>
+			</stringcontrol>
+			<numberfield name="nos">
+				<anchored>
+					<to>noslabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="spellsteplabel"> <!--{{{-->
+				<bounds>0,150,55,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Spellcasting:</static>
+			</stringcontrol>
+			<stepcontrol_field name="spellstep">
+				<anchored>
+					<to>spellsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Spellcasting (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Spellcasting (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="effectsteplabel"> <!--{{{-->
+				<bounds>15,170,28,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Effect:</static>
+			</stringcontrol>
+			<stepcontrol_field name="effectstep">
+				<anchored>
+					<to>effectsteplabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Effect (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Effect (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+
+			<stringcontrol name="phydeflabel"> <!--{{{-->
+				<bounds>-110,50,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Physical Defense:</static>
+			</stringcontrol>
+			<numberfield name="defense.physical.total">
+				<anchored>
+					<to>phydeflabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="spedeflabel"> <!--{{{-->
+				<bounds>-110,70,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Spell Defense:</static>
+			</stringcontrol>
+			<numberfield name="defense.spell.total">
+				<anchored>
+					<to>spedeflabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="socdeflabel"> <!--{{{-->
+				<bounds>-110,90,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Social Defense:</static>
+			</stringcontrol>
+			<numberfield name="defense.social.total">
+				<anchored>
+					<to>socdeflabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="armorlabel"> <!--{{{-->
+				<bounds>-110,110,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Armor:</static>
+			</stringcontrol>
+			<numberfield name="armor">
+				<anchored>
+					<to>armorlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="mysticarmorlabel"> <!--{{{-->
+				<bounds>-110,130,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Mystic Armor:</static>
+			</stringcontrol>
+			<numberfield name="mysticarmor">
+				<anchored>
+					<to>mysticarmorlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="knockdownlabel"> <!--{{{-->
+				<bounds>-110,150,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Knockdown:</static>
+			</stringcontrol>
+			<stepcontrol_field name="knockdown">
+				<anchored>
+					<to>knockdownlabel</to>
+					<position>righthigh</position>
+					<offset>5,-3</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription("Knockdown (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, "Knockdown (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("leftlow", 0, 10);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+			<stringcontrol name="recoverytestslabel"> <!--{{{-->
+				<bounds>-110,170,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Recovery Tests:</static>
+			</stringcontrol>
+			<numberfield name="recoverytests">
+				<anchored>
+					<to>recoverytestslabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+
+			<stringcontrol name="deathlabel"> <!--{{{-->
+				<bounds>0,195,70,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Death Rating:</static>
+			</stringcontrol>
+			<numberfield name="health.death.total">
+				<anchored>
+					<to>deathlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="woundlabel"> <!--{{{-->
+				<bounds>0,215,90,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Wound Threshold:</static>
+			</stringcontrol>
+			<numberfield name="wound">
+				<anchored>
+					<to>woundlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="unconlabel"> <!--{{{-->
+				<bounds>0,235,110,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Unconsciousness Rating:</static>
+			</stringcontrol>
+			<numberfield name="health.unconscious.total">
+				<anchored>
+					<to>unconlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="combatmovelabel"> <!--{{{-->
+				<bounds>-110,195,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Combat Movement:</static>
+			</stringcontrol>
+			<numberfield name="combatmove">
+				<anchored>
+					<to>combatmovelabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="fullmovelabel"> <!--{{{-->
+				<bounds>-110,215,80,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Full Movement:</static>
+			</stringcontrol>
+			<numberfield name="fullmove">
+				<anchored>
+					<to>fullmovelabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+
+			<stringcontrol name="legendlabel"> <!--{{{-->
+				<bounds>0,260,70,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Legend Points:</static>
+			</stringcontrol>
+			<numberfield name="legend">
+				<anchored>
+					<to>legendlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>50</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</numberfield><!--}}}-->
+			<stringcontrol name="equiplabel"> <!--{{{-->
+				<bounds>0,280,60,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Equipment:</static>
+			</stringcontrol>
+			<stringfield name="equip">
+				<anchored>
+					<to>equiplabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>195</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</stringfield><!--}}}-->
+			<stringcontrol name="lootlabel"> <!--{{{-->
+				<bounds>0,300,30,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Loot:</static>
+			</stringcontrol>
+			<stringfield name="loot">
+				<anchored>
+					<to>lootlabel</to>
+					<position>righthigh</position>
+					<offset>5,-4</offset>
+					<size>
+						<width>225</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,2,2</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+
+				</script>
+			</stringfield><!--}}}-->
+
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+	<windowclass name="npc_other"><!--{{{-->
+		<datasource>npc</datasource>
+		<sheetdata>
+			
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+	<windowclass name="gmnpcprops"><!--{{{-->
+		<sheetdata>
+
+<!-- PROPS --><!--{{{-->
+			<genericcontrol name="propframe">
+				<bounds>0,0,-1,-1</bounds>
+			</genericcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>propframe</to>
+					<position>insidetopleft</position>
+					<offset>0,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Property:</static>
+			</stringcontrol>
+			
+			<stringcontrol>
+				<anchored>
+					<to>propframe</to>
+					<position>insidetopleft</position>
+					<offset>170,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Value:</static>
+			</stringcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>propframe</to>
+					<position>insidetopleft</position>
+					<offset>220,0</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Step:</static>
+			</stringcontrol>
+
+			<windowlist name="proplist">
+				<bounds>0,20,-1,-1</bounds>
+				<datasource>.props</datasource>
+				<class>gmnpcprops_listitem</class>
+				<allowcreate />
+				<allowdelete />
+			</windowlist>
+            <scrollbar>
+				<target>proplist</target>
+                <anchored to="proplist" />                
+            </scrollbar>			
+		</sheetdata>
+	</windowclass><!--}}}-->
+	<windowclass name="gmnpcprops_listitem"> <!--{{{-->
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<textlistitemvalue name="property"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>160</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>value</next>
+					<prev>value</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+				function onEnter()
+					local new = window.windowlist.createWindow();
+					new[getName()].setFocus();
+					onNavigateDown();
+				end
+				</script>
+			</textlistitemvalue><!--}}}-->
+
+			<textlistitemvalue name="value"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>170</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>40</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>property</prev>
+					<next>property</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+				function onEnter()
+					local new = window.windowlist.createWindow();
+					new[getName()].setFocus();
+					onNavigateDown();
+				end
+				</script>
+			</textlistitemvalue><!--}}}-->
+
+			<stepcontrol_field name="propstep"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>220</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+						setFrame("sheetfocus", 2, 2, 2, 2);
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+						setFrame("modifier", 2, 2, 2, 2);
+					end
+
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						
+						dragdata.setDescription(window.property.getValue() .. " (Step " .. getValue() .. ")");
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						ChatManager.control.throwDice("dice",dice, mod, window.property.getValue() .. " (Step " .. getValue() .. ")");
+					end
+					function onHover(state)
+						if state then
+							diestring = "";
+							dice = {};
+							mod = 0;
+							dice, mod = Step.getStepDice(getValue());
+							for i=1,table.maxn(dice) do
+								diestring = diestring .. dice[i] .. "+";
+							end
+							if mod &lt; 0 then
+								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
+							else
+								diestring = string.sub(diestring,1,string.len(diestring)-1);
+							end
+							dieWidget.setPosition("left", -20, 0);
+							dieWidget.setText(diestring);
+							dieWidget.setVisible(true);
+							setColor("#FF228822");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+							end
+							dieWidget.setVisible(false);
+						end
+					end
+				</script>
+			</stepcontrol_field><!--}}}-->
+
+			<windowreferencefield name="gmnpcprop_shortcut"><!--{{{-->
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>265</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield><!--}}}-->
+
+
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+	<windowclass name="npc_description"><!--{{{-->
+		<datasource>npc</datasource>
+		<sheetdata>
+			<!-- DESCRIPTION -->
+			<formattedtextfield name="text">
+				<anchored>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<left>
+						<anchor>left</anchor>
+					</left>
+					<right>
+						<anchor>right</anchor>
+					</right>
+				</anchored>
+				<font>
+					<normal>chatfont</normal>
+					<bold>narratorfont</bold>
+					<italic>chatitalicfont</italic>
+					<bolditalic>chatbolditalicfont</bolditalic>
+					<title>defaultstringcontrol</title>
+				</font>
+                <icon link="button_link" emptylink="button_link_empty" chat="button_speak" />
+				<selectioncolor>#FFD296</selectioncolor>
+				<footer>footer_narrow</footer>
+				<empty>Click to enter description</empty>
+			</formattedtextfield>
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+	<windowclass name="npc"><!--{{{-->
+		<datasource>npc</datasource>
+		<frame>charsheet</frame>
+		<placement>
+			<size>
+				<width>330</width>
+				<height>405</height>
+			</size>
+		</placement>
+		<sizelimits>
+			<minimum>
+				<width>330</width>
+				<height>405</height>
+			</minimum>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_npc</minimize>
+		<tooltip>
+			<field>name</field>
+		</tooltip>
+		<sharable />
+		<sheetdata>
+			<!-- NAME -->
+			<genericcontrol name="nameframe">
+				<bounds>38,20,-35,35</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			<windowopencontrol>
+				<anchored>
+					<to>nameframe</to>
+					<position>insidetopleft</position>
+					<offset>13,8</offset>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<class>npc</class>
+				<description>
+					<field>name</field>
+				</description>
+			</windowopencontrol>
+			<stringfield name="name">
+				<anchored>
+					<top>
+						<parent>nameframe</parent>
+						<anchor>top</anchor>
+						<offset>9</offset>
+					</top>
+					<left>
+						<parent>nameframe</parent>
+						<anchor>left</anchor>
+						<offset>35</offset>
+					</left>
+					<right>
+						<parent>nameframe</parent>
+						<anchor>right</anchor>
+						<offset>-15</offset>
+					</right>
+				</anchored>
+				<empty>&#171; New Personality &#187;</empty>
+				<font>sheettext</font>
+			</stringfield>
+			<tokenfield name="token">
+				<bounds>13,25,25,25</bounds>
+				<empty>indicator_emptytoken</empty>
+			</tokenfield>
+			<buttoncontrol>
+				<bounds>-36,27,23,22</bounds>
+				<icon>
+					<normal>button_identityactivate</normal>
+					<pressed>button_identityactivate_down</pressed>
+				</icon>
+				<script>
+					function onButtonPress()
+						GmIdentityManager.addIdentity(window.name.getValue());
+					end
+				</script>
+			</buttoncontrol>
+
+			<genericcontrol name="tabcontentframe">
+				<bounds>10,54,-25,-15</bounds>
+				<frame>
+					<name>sheetgroup</name>
+					<offset>0,1,0,0</offset>
+				</frame>
+			</genericcontrol>
+
+			<!-- SUBWINDOWS -->
+			<subwindow name="description">
+				<anchored>
+					<to>tabcontentframe</to>
+					<position>over</position>
+					<offset>-15,-7</offset>
+				</anchored>
+				<class>npc_description</class>
+			</subwindow>
+			<subwindow name="combat">
+				<anchored>
+					<to>tabcontentframe</to>
+					<position>over</position>
+					<offset>-15,-7</offset>
+				</anchored>
+				<class>npc_combat</class>
+			</subwindow>
+			<subwindow name="other">
+				<anchored>
+					<to>tabcontentframe</to>
+					<position>over</position>
+					<offset>-15,-7</offset>
+				</anchored>
+				<class>gmnpcprops</class>
+			</subwindow>
+            <scrollbar name="description_scroller">
+				<target>description</target>
+                <anchored to="description" />                
+            </scrollbar>
+            <scrollbar name="combat_scroller">
+				<target>combat</target>
+                <anchored to="combat" />                
+            </scrollbar>
+            <scrollbar name="other_scroller">
+				<target>other</target>
+                <anchored to="other" />                
+            </scrollbar>
+
+			<tabcontrol name="tabs">
+				<bounds>-22,50,18,223</bounds>
+				<tab>
+					<icon>tab_combat</icon>
+					<subwindow>combat</subwindow>
+					<scroller>combat_scroller</scroller>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>description</subwindow>
+					<scroller>description_scroller</scroller>
+				</tab>
+				<tab>
+					<icon>tab_other</icon>
+					<subwindow>other</subwindow>
+					<!--<scroller>other_scroller</scroller>-->
+				</tab>
+				<activate>1</activate>
+			</tabcontrol>
+			<closebutton_charsheetmini />
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+
+</root>

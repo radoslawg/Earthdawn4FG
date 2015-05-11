@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<framedef name="textline">
+		<bitmap file="graphics/frames/textline.png" />
+		<middle rect="0,0,100,20" />
+	</framedef>
+
+	<framedef name="textlinesmall">
+		<bitmap file="graphics/frames/textline.png" />
+		<middle rect="0,2,100,14" />
+	</framedef>
+    
+	<framedef name="tempmodsmall">
+		<bitmap file="graphics/frames/tempmodsmall.png" />
+		<topleft rect="0,0,12,12" />
+		<top rect="12,0,89,12" />
+		<topright rect="101,0,11,12" />
+		<left rect="0,12,12,89" />
+		<middle rect="12,12,89,89" />
+		<right rect="101,12,11,89" />
+		<bottomleft rect="0,101,12,12" />
+		<bottom rect="12,101,89,12" />
+		<bottomright rect="101,101,11,12" />
+	</framedef>
+    
+	<framedef name="rowshade">
+		<bitmap file="graphics/frames/rowshade.png" />
+		<middle rect="0,0,200,100" />
+	</framedef>	
+    
+	<framedef name="acicon_small">
+		<bitmap file="graphics/frames/acicon_small.png" />
+		<topleft rect="0,0,27,30" />
+	</framedef>
+
+	<framedef name="tabs">
+		<bitmap file="graphics/frames/tabs.png" />
+		<topleft rect="0,0,18,13" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,13,18,455" />
+		<bottomleft rect="0,468,18,24" />
+	</framedef>
+
+	<framedef name="tabs2">
+		<bitmap file="graphics/frames/tabs2.png" />
+		<topleft rect="0,0,18,13" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,13,18,521" />
+		<bottomleft rect="0,534,18,24" />
+	</framedef>
+    
+	<framedef name="modifier">
+		<bitmap file="graphics/frames/modifier.png" />
+		<topleft rect="0,0,12,12" />
+		<top rect="12,0,200,12" />
+		<topright rect="212,0,12,12" />
+		<left rect="0,12,12,187" />
+		<middle rect="12,12,200,187" />
+		<right rect="212,12,12,187" />
+		<bottomleft rect="0,199,12,12" />
+		<bottom rect="12,199,200,12" />
+		<bottomright rect="212,199,12,12" />
+	</framedef>
+
+	<framedef name="sheetfocus">
+		<bitmap file="graphics/frames/sheetfocus.png" />
+		<topleft rect="0,0,12,12" />
+		<top rect="12,0,200,12" />
+		<topright rect="212,0,12,12" />
+		<left rect="0,12,12,187" />
+		<middle rect="12,12,200,187" />
+		<right rect="212,12,12,187" />
+		<bottomleft rect="0,199,12,12" />
+		<bottom rect="12,199,200,12" />
+		<bottomright rect="212,199,12,12" />
+	</framedef>
+    
+	<framedef name="referencebox">
+		<bitmap file="graphics/frames/referencebox.png" />
+		<topleft rect="0,0,14,12" />
+		<top rect="14,0,512,12" />
+		<topright rect="526,0,18,12" />
+		<left rect="0,12,14,508" />
+		<middle rect="14,12,512,508" />
+		<right rect="526,12,18,508" />
+		<bottomleft rect="0,520,14,14" />
+		<bottom rect="14,520,512,14" />
+		<bottomright rect="526,520,18,14" />
+	</framedef>
+	
+	<framedef name="charsheet">
+		<bitmap file="graphics/frames/charsheet.png" />
+		<topleft rect="0,0,22,22" />
+		<top rect="22,0,481,22" />
+		<topright rect="503,0,22,22" />
+		<left rect="0,22,22,567" />
+		<middle rect="22,22,481,567" />
+		<right rect="503,22,22,567" />
+		<bottomleft rect="0,589,22,22" />
+		<bottom rect="22,589,481,22" />
+		<bottomright rect="503,589,22,22" />
+	</framedef>
+	
+	<framedef name="minisheet">
+		<bitmap file="graphics/frames/minisheet.png" />
+		<topleft rect="0,0,15,15" />
+		<top rect="15,0,250,15" />
+		<topright rect="265,0,16,15" />
+		<left rect="0,15,15,249" />
+		<middle rect="15,15,250,249" />
+		<right rect="265,15,16,249" />
+		<bottomleft rect="0,264,15,16" />
+		<bottom rect="15,264,250,16" />
+		<bottomright rect="265,264,16,16" />
+	</framedef>
+	
+
+	<framedef name="bonus">
+		<bitmap file="graphics/frames/bonus.png" />
+		<topleft rect="0,0,12,12" />
+		<top rect="12,0,200,12" />
+		<topright rect="212,0,12,12" />
+		<left rect="0,12,12,187" />
+		<middle rect="12,12,200,187" />
+		<right rect="212,12,12,187" />
+		<bottomleft rect="0,199,12,12" />
+		<bottom rect="12,199,200,12" />
+		<bottomright rect="212,199,12,12" />
+	</framedef>
+
+	<framedef name="sheetgroup">
+		<bitmap file="graphics/frames/sheetgroup.png" />
+		<topleft rect="0,0,17,18" />
+		<top rect="18,0,512,18" />
+		<topright rect="530,0,17,18" />
+		<left rect="0,18,18,512" />
+		<middle rect="18,18,512,512" />
+		<right rect="530,18,17,512" />
+		<bottomleft rect="0,530,18,17" />
+		<bottom rect="18,530,512,17" />
+		<bottomright rect="530,530,17,17" />
+	</framedef>
+</root>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<includefile source="charsheet/charsheet_templates.xml" />
+	<includefile source="charsheet/charsheet_my_templates.xml" />
+	<includefile source="charsheet/charsheet_toplevel.xml" />
+	<includefile source="charsheet/charsheet_main.xml" />
+	<includefile source="charsheet/charsheet_talentfull.xml" />
+	<includefile source="charsheet/charsheet_talentlistitem.xml" />
+	<includefile source="charsheet/charsheet_talents.xml" />
+	<includefile source="charsheet/charsheet_skillfull.xml" />
+	<includefile source="charsheet/charsheet_skills.xml" />
+	<includefile source="charsheet/charsheet_spellfull.xml" />	
+	<includefile source="charsheet/charsheet_spelllistitem.xml" />	
+	<includefile source="charsheet/charsheet_spells.xml" />
+	<includefile source="charsheet/charsheet_itemfull.xml" />
+	<includefile source="charsheet/charsheet_inventory.xml" />
+	<includefile source="charsheet/charsheet_combat.xml" />
+	<includefile source="charsheet/charsheet_threads.xml" />
+	<includefile source="charsheet/charsheet_notes.xml" />
+	<includefile source="charsheet/charsheet_minisheets.xml" />
+</root>

@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="talent_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+		
+			<textlistitemvalue name="circle">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>name</next>
+					<prev>disciplinename</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<textlistitemvalue name="name">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>disciplinename</next>
+					<prev>circle</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onDoubleClick()
+						win = Interface.openWindow("talentfull",window.getDatabaseNode());
+					end
+
+				</script>
+			</textlistitemvalue>
+            
+            <stringfield name="attribname">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+                <invisible/>
+                <script file="scripts/statmodifier.lua" />
+           
+            </stringfield>
+			
+			<numberfield name="rank">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>135</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+					function onValueChanged()
+						if window.name.getValue() == "Willforce" then
+							window.windowlist.window.getDatabaseNode().getChild("willforce.step.base").setValue(getValue() + window.statmod.getValue());
+						end
+					end
+				</script>
+				<readonly />
+			</numberfield>
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>156</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>+</static>
+			</stringcontrol>
+			
+			<step_linked name="attribute">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<readonly />
+				<invisible />
+			</step_linked>
+            
+			<numberfield name="statmod">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<readonly />
+				<invisible />
+			</numberfield>
+			<step_linked name="attributetmp">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<font>sheetnumber</font>
+				<source>
+					<name>attribute</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>statmod</name>
+					<op>+</op>
+				</source>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<script>
+					function onWheel()
+						return false;
+					end
+				</script>
+				<readonly />
+			</step_linked>
+			
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>186</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>=</static>
+			</stringcontrol>
+			
+			<step_linked_modifier_roll name="step" source="step.total">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>195</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<readonly />
+				<source>
+					<name>attributetmp</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>rank</name>
+					<op>+</op>
+				</source>
+				<modifierfield>step.total.temp</modifierfield>
+			</step_linked_modifier_roll>
+
+			<checkbox name="discipline">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>222</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onClickDown()
+						return false;
+					end
+				</script>
+				<tooltip>
+					<text>Discipline Talent</text>
+				</tooltip>
+			</checkbox>
+			
+			<action_cycler name="action">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>234</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					
+				</anchored>
+				<tooltip>
+					<text>Action Required</text>
+				</tooltip>
+				<readonly/>
+			</action_cycler>
+			
+			<modify_strain name="strain">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>295</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<readonly />
+			</modify_strain>
+			
+            <stringfield name="disciplinename">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>322</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>73</width>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>				
+            </stringfield>
+						
+			<buttoncontrol name="fulltalent">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("talentfull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowreferencefield name="talent_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+
+				
+		</sheetdata>
+	</windowclass>
+</root>

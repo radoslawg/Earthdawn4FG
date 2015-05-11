@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+    <!-- Record -->
+	<template name="record_description">
+			<ft_record name="description">
+				<anchored>
+					<top parent="descriptionlabel" anchor="belowleft" offset="0, 10"/>
+					<left parent="contentframe" anchor="left" offset="0, 0"/>
+					<right parent="contentframe" anchor="right" offset="0, 0"/>
+					<bottom parent="contentframe" anchor="below" offset="0, 0"/>
+				</anchored>						
+				<footer>footer_wide</footer>
+			</ft_record>
+	</template>        
+
+	<template name="record_scrollbar_description">
+		<scrollbar>
+			<target>description</target>
+			<anchored to="description" />                
+		</scrollbar>
+	</template>    
+    <!-- End of Record -->
+
+    <template name="step_field">
+        <numberfield>
+            <frame>
+                <name>modifier</name>
+                <offset>3,3,3,3</offset>
+            </frame>
+            <keyeditframe>
+                <name>sheetfocus</name>
+                <offset>3,3,3,3</offset>
+            </keyeditframe>        
+			<stateframe>
+				<drophilight>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</drophilight>
+			</stateframe>			
+            <font>sheetnumber</font>
+            <script>
+                function onGainFocus()
+                    setColor("#FF990099");
+                end
+                function onLoseFocus()
+                    setColor(nil);
+                end
+                function onHover(state)
+                    if state then
+                        setColor("#FF990099");
+                    else
+                        if hasFocus() == false then
+                            setColor(nil);
+                        end
+                    end
+                end
+            </script>
+        </numberfield>
+    </template>        
+    
+    <template name="step_linked">
+        <linkednumber>
+            <frame>
+                <name>modifier</name>
+                <offset>3,3,3,3</offset>
+            </frame>
+            <keyeditframe>
+                <name>sheetfocus</name>
+                <offset>3,3,3,3</offset>
+            </keyeditframe>        
+			<stateframe>
+				<drophilight>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</drophilight>
+			</stateframe>	
+            <font>sheetnumber</font>
+            <script>
+                function onGainFocus()
+                    setColor("#FF990099");
+                end
+                function onLoseFocus()
+                    setColor(nil);
+                end
+                function onHover(state)
+                    if state then
+                        setColor("#FF990099");
+                    else
+                        if hasFocus() == false then
+                            setColor(nil);
+                        end
+                    end
+                end
+            </script>            
+        </linkednumber>
+    </template>
+    
+    <template name="step_linked_modifier">
+        <step_linked>
+            <noreset />
+            <readonly />
+            <script file="scripts/template_modifiernumber.lua" />            
+        </step_linked>
+    </template>
+    
+	
+	<template name="step_linked_modifier_roll">
+		<step_linked_modifier>
+			<rollable />
+            <script file="scripts/step_dice_display.lua"/>
+			<script>
+				function action(draginfo)
+					local nodeWin = getDatabaseNode();
+					if nodeWin then
+						local rActor = ActorManager.getActor("pc", nodeWin.getChild("..."));
+						ActionStep.performSRoll(draginfo, rActor, nodeWin);
+					end
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>		
+		</step_linked_modifier>
+	</template>
+	
+
+
+    <template name="step_roll">
+		<step_field>
+			<rollable />
+			<script>
+				function action(draginfo)
+					local nodeWin = getDatabaseNode();
+					if nodeWin then
+						local rActor = ActorManager.getActor("pc", nodeWin.getChild("..."));
+						ActionStep.performSRoll(draginfo, rActor, nodeWin);
+					end
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>
+		</step_field>
+	</template>    
+
+    <template name="step_mod">
+        <step_field>
+            <frame>
+                <name>modifier</name>
+                <offset>4,4,4,4</offset>
+            </frame>
+            <font>sheettextsmall</font>   
+            <displaysign />
+            <hideonvalue>0</hideonvalue>
+            
+            <script>
+                function onValueChanged()
+                    if getValue() == 0 then
+                        setFrame("modifier",1,1,1,1);
+                    else
+                        setFrame("modifier", 4, 4, 4, 4);
+                    end
+                end
+                function onInit()
+                    if getValue() == 0 then
+                        setFrame("modifier",1,1,1,1);
+                    else
+                        setFrame("modifier", 4, 4, 4, 4);
+                    end
+                end
+            </script>    
+        </step_field>
+    </template>
+    
+    <template name="notes_link">
+        <windowreferencefield>
+            <anchored>
+                <size height="20"/>
+            </anchored>
+            <icon>
+                <normal>button_openwindow</normal>
+                <empty>button_emptytarget</empty>
+                <pressed>button_emptytarget</pressed>
+            </icon>
+            <allowdrop />
+        </windowreferencefield>
+    </template>
+
+    <template name="modify_strain">
+        <step_field name="strain">
+
+            <script>
+                function onDoubleClick()
+                    local st = getValue();
+                    local char = window.getDatabaseNode().getChild("...");
+                    local hd = DB.getChild(char, "health.damage");
+                    hd.setValue(hd.getValue() + st );
+                    ChatManager.Message("Strain: " .. st, true, ActorManager.getActor("pc", window.getDatabaseNode().getChild("...")));
+                end
+            </script>				    
+        </step_field>
+    </template>
+
+    <template name="checkbox">
+        <button_checkbox>
+            <anchored width="12"/>
+            <default>0</default>
+        </button_checkbox>
+    </template>
+</root>    

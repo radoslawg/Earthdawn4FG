@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="spell_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+		
+			<textlistitemvalue name="circle">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>0</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>range</prev>
+					<next>name</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<textlistitemvalue name="name">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>numthreads</next>
+					<prev>circle</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+					function onDoubleClick()
+						win = Interface.openWindow("spellfull",window.getDatabaseNode());
+					end
+				</script>
+			</textlistitemvalue>
+ 			<textlistitemnumber name="numthreads">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>138</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>25</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>name</prev>
+					<next>weavethread</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+			</textlistitemnumber>
+
+ 			<textlistitemnumber name="weavethread">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>171</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>numthreads</prev>
+					<next>reattune</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+			</textlistitemnumber>
+
+			<stringcontrol>
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>187</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>10</width>
+					</size>
+				</anchored>
+				<static>/</static>
+				<center />
+			</stringcontrol>
+
+ 			<textlistitemnumber name="reattune">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>197</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>15</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>weavethread</prev>
+					<next>casting</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+			</textlistitemnumber>
+ 			<textlistitemvalue name="casting">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>220</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>35</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>reattune</prev>
+					<next>range</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<center />
+				<empty>TSD</empty>
+			</textlistitemvalue>
+ 			<textlistitemvalue name="range">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>260</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>70</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<prev>casting</prev>
+					<next>circle</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+			</textlistitemvalue>
+	
+			<step_linked_modifier_roll name="step" source="step.total">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>350</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<readonly />
+				<source>
+					<name>effect</name>
+					<op>+</op>
+				</source>
+
+				<rollable/>
+			</step_linked_modifier_roll>
+
+			<buttoncontrol name="fullspell">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("spellfull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowreferencefield name="spell_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+
+				
+		</sheetdata>
+	</windowclass><!--}}}-->
+</root>

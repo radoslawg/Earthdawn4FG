@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="refitemfull"><!--{{{-->
+		<frame>recordsheet</frame>
+		<placement>
+			<size height="450" width="375" />
+		</placement>
+		<sizelimits>
+			<minimum height="450" width="375" />
+			<dynamic />
+		</sizelimits>        
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+            <sub_record_header name="header">
+                <class>ref_item_header</class>
+            </sub_record_header>            
+			<ref_contentframe/>
+			
+			<labeledstring name="disciplinename">
+				<anchored to="contentframe" position="insidetopleft" offset="5,5" width="180"/> 
+				<label>discipline</label>
+				<tabtarget>
+					<prev>name</prev>
+					<next>circle</next>
+				</tabtarget>
+			</labeledstring>
+
+			<labeledstring name="circle">
+				<anchored to="disciplinename" position="right" offset="10,0" width="110"/>
+				<label>circle</label>
+				<center />
+				<tabtarget>
+					<prev>disciplinename</prev>
+					<next>numthreads</next>
+				</tabtarget>
+			</labeledstring>
+			
+
+			<stringcontrol name="threadslabel">
+				<anchored to="disciplinename" position="below" offset="0,10"/>
+				<font>sheetlabelsmall</font>
+				<static>Threads:</static>
+			</stringcontrol>
+
+			<numberfield name="numthreads">
+				<anchored to="circle" position="belowleft" offset="0,10" width="25"/>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>circle</prev>
+					<next>weavethread</next>
+				</tabtarget>
+			</numberfield>
+
+			<stringcontrol name="weavelabel">
+				<anchored to="threadslabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Weaving Difficulty:</static>
+			</stringcontrol>
+
+			<numberfield name="weavethread">
+				<anchored to="numthreads" position="below" offset="0,10" width="25"/>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>numthreads</prev>
+					<next>reattune</next>
+				</tabtarget>
+			</numberfield>
+
+			<stringcontrol name="slashlabel">
+				<anchored to="weavethread" position="right"/>
+				<font>sheetlabelsmall</font>
+				<static>/</static>
+			</stringcontrol>
+
+			<numberfield name="reattune">
+				<anchored to="slashlabel" position="right" width="25"/>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>weavethread</prev>
+					<next>range</next>
+				</tabtarget>
+			</numberfield>
+
+			<stringcontrol name="rangelabel">
+				<anchored to="weavelabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Range:</static>
+			</stringcontrol>
+
+			<stringfield name="range">
+				<anchored to="weavethread" position="belowleft" offset="0,5" width="110"/>
+				<frame>
+					<name>textline</name>
+					<offset>1,5,1,1</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>reattune</prev>
+					<next>duration</next>
+				</tabtarget>
+			</stringfield>
+
+			<stringcontrol name="durationlabel">
+				<anchored to="rangelabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Duration:</static>
+			</stringcontrol>
+
+			<stringfield name="duration">
+				<anchored to="range" position="below" offset="0,5"/>
+				<frame>
+					<name>textline</name>
+					<offset>1,5,1,1</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>range</prev>
+					<next>casting</next>
+				</tabtarget>
+			</stringfield>
+
+			<stringcontrol name="castinglabel">
+				<anchored to="durationlabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Casting Difficulty:</static>
+			</stringcontrol>
+
+			<stringfield name="casting">
+				<anchored to="duration" position="below" offset="0,5"/>
+				<frame>
+					<name>textline</name>
+					<offset>1,5,1,1</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>duration</prev>
+					<next>effect</next>
+				</tabtarget>
+				<empty>TSD</empty>
+			</stringfield>
+
+			<stringcontrol name="effectsteplabel">
+				<anchored to="castinglabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Effect Step:</static>
+			</stringcontrol>
+
+			<numberfield name="effect">
+				<anchored to="casting" position="belowleft" offset="0,5" width="25"/>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>casting</prev>
+					<next>effecttext</next>
+				</tabtarget>
+			</numberfield>
+
+			<stringcontrol name="effecttextlabel">
+				<anchored to="effectsteplabel" position="below" offset="0,5"/>
+				<font>sheetlabelsmall</font>
+				<static>Effect:</static>
+			</stringcontrol>
+			
+			<stringfield name="effecttext">
+				<anchored to="effect" position="belowleft" offset="0,5" width="110"/>
+				<frame>
+					<name>textline</name>
+					<offset>1,5,1,1</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>duration</prev>
+					<next>effect</next>
+				</tabtarget>
+				<empty></empty>
+			</stringfield>
+			
+			<stringcontrol name="descriptionlabel">
+				<anchored to="effecttextlabel" position="belowleft" offset="0,10"/>
+				<font>sheettext</font>
+				<static>Description</static>
+				<center/>
+			</stringcontrol>
+			
+			<ref_description/>
+			<scrollbar_description/>
+			<resize_recordsheet />
+			<close_recordsheet />			
+
+		</sheetdata>
+	</windowclass><!--}}}-->
+	
+	<windowclass name="ref_item_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>refitemfull</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+</root>
