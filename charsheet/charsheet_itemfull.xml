@@ -39,7 +39,7 @@
 			</stringcontrol>
 
 			<numberfield name="numweight">
-				<anchored to="numvalue" position="below" offset="0,10"/>
+				<anchored to="numvalue" position="below" offset="0,5"/>
 				<frame>
 					<name>modifier</name>
 					<offset>3,3,3,3</offset>
@@ -47,8 +47,18 @@
 				<font>sheetlabelsmall</font>
             </numberfield>
 			
+			<stringcontrol name="availabilitylabel">
+				<anchored to="weightlabel" position="below" offset="0,7"/>
+				<font>sheetlabelsmall</font>
+				<static>Availability:</static>
+			</stringcontrol>
+
+			<availability_cycler name="availability">
+				<anchored to="availabilitylabel" position="rightlow" offset="0,0"/>
+            </availability_cycler>		
+			
 			<stringcontrol name="descriptionlabel">
-				<anchored to="weightlabel" position="belowleft" offset="0,10"/>
+				<anchored to="availabilitylabel" position="belowleft" offset="0,10"/>
 				<font>sheettext</font>
 				<static>Description</static>
 				<center/>

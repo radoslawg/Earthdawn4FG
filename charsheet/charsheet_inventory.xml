@@ -166,7 +166,7 @@
 							local class, datasource = draginfo.getShortcutData();
 							local source = draginfo.getDatabaseNode();
 
-							if source and class == "item" then
+							if source and class == "refitemfull" then
 								local newentry = addCustomItem(source);
 							end
 					
@@ -177,59 +177,13 @@
 					function addCustomItem(source)
 						local newentry = createWindow();
 						newentry.name.setValue(source.createChild("name", "string").getValue());
+						newentry.numvalue.setValue(source.createChild("numvalue", "number").getValue());
+						newentry.numweight.setValue(source.createChild("numweight", "number").getValue());
+						newentry.quantity.setValue(1);
+						newentry.carried.setValue(1);
 						local newnode = newentry.getDatabaseNode();
-						newnode.createChild("spelldefense", "number").setValue(source.createChild("spelldefense", "number").getValue());
-						newnode.createChild("maxthreads", "number").setValue(source.createChild("maxthreads", "number").getValue());
-						newnode.createChild("description", "string").setValue(source.createChild("description", "string").getValue());
-						--[[newnode.createChild("valuesp", "number").setValue(tonumber(source.createChild("props").createChild("cost", "string").createChild("value", "number").getValue()));]]
-						--[[newnode.createChild("weight", "number").setValue(tonumber(source.createChild("props").createChild("weight", "string").createChild("value", "number").getValue()));]]
-						newlist = newnode.createChild("props");
-						srcxlist = source.getChild("props");
-						for k,subnode in pairs(srcxlist.getChildren()) do
-							copyNode(subnode, newlist, true);
-							
-							if subnode.getChild("property") then
-								--[[print("subnode = " .. subnode.getChild("property").getValue());]]
-								if subnode.getChild("property").getValue() == "Cost" then
-									--[[print(".. Found cost..");]]
-									newnode.createChild("valuesp", "number").setValue(tonumber(subnode.getChild("value").getValue()));
-								end
-								if subnode.getChild("property").getValue() == "Weight" then
-									--[[print(".. Found weight..");]]
-									newnode.createChild("weight", "number").setValue(tonumber(subnode.getChild("value").getValue()));
-								end
-							end
-						end
-						newlist = newnode.createChild("threads");
-						srcylist = source.getChild("threads");
-						for k,subnode in pairs(srcylist.getChildren()) do
-							copyNode(subnode, newlist, true);
-						end
-					end
-
-					function copyNode(source, targetlist, rename)
-					  local nodeType = source.getType();
-					  if nodeType=="number" or nodeType=="string" or nodeType=="image" or nodeType=="dice" or nodeType=="windowreference" then
-					    local newnode = targetlist.createChild(source.getName(),nodeType).setValue(source.getValue());
-					    return newnode;
-					  end
-					  if nodeType=="formattedtext" then
-					    local newnode = targetlist.createChild(source.getName(),nodeType);
-					    return newnode;
-					  end
-					  if nodeType~="node" then
-					    return nil;
-					  end
-					  local newlist;
-					  if rename then
-					    newlist = targetlist.createChild();
-					  else
-					    newlist = targetlist.createChild(source.getName());
-					  end
-					  for k,subnode in pairs(source.getChildren()) do
-					    copyNode(subnode,newlist);
-					  end
-					  return newlist;
+						newnode.createChild("availability", "string").setValue(source.createChild("availability", "string").getValue());
+						newnode.createChild("description", "formattedtext").setValue(source.createChild("detailtext", "formattedtext").getValue());
 					end
 
 				</script>
@@ -1030,7 +984,6 @@
 				</icon>
 				<allowdrop />
 			</windowreferencefield>
-
 				
 		</sheetdata>
 	</windowclass>

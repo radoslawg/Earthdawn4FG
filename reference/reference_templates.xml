@@ -54,4 +54,15 @@
 		</button_stringcycler>
 	</template>	
 
+	<template name="availability_cycler">
+		<button_stringcycler>
+			<anchored width="59" height="12"/>
+			<parameters>
+				<labels>Everyday|Average|Unusual|Rare|Very Rare</labels>
+				<values>Everyday|Average|Unusual|Rare|VeryRare</values>
+			</parameters>
+			<font>sheetlabelsmall</font>
+		</button_stringcycler>
+	</template>	
+	
 </root>
