@@ -17,29 +17,14 @@
             </sub_record_header>            
 			<ref_contentframe/>
 
-			<stringcontrol name="quantitylabel">
-				<anchored to="contentframe" position="insidetopleft" offset="5,5" width="180"/> 
+			<stringcontrol name="valuelabel">
+				<anchored to="contentframe" position="insidetopleft" offset="5,5" width="150"/> 
 				<font>sheetlabelsmall</font>
-				<static>Quantity:</static>
+				<static>Value:</static>
 			</stringcontrol>
 
-			<numberfield name="numquantity">
-				<anchored to="quantitylabel" position="right" offset="0,0" width="50"/>
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-			</numberfield>
-			
-			<stringcontrol name="costlabel">
-				<anchored to="quantitylabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Cost:</static>
-			</stringcontrol>
-
-			<numberfield name="numcost">
-				<anchored to="numquantity" position="below" offset="0,5"/>
+			<numberfield name="numvalue">
+				<anchored to="valuelabel" position="right" offset="0,0" width="50"/>
 				<frame>
 					<name>modifier</name>
 					<offset>3,3,3,3</offset>
@@ -47,124 +32,23 @@
 				<font>sheetlabelsmall</font>
 			</numberfield>
 
-			<stringcontrol name="costtotallabel">
-				<anchored to="costlabel" position="below" offset="0,5"/>
+			<stringcontrol name="weightlabel">
+				<anchored to="valuelabel" position="below" offset="0,5"/>
 				<font>sheetlabelsmall</font>
-				<static>Cost Total:</static>
+				<static>Weight:</static>
 			</stringcontrol>
 
-			<linkednumber name="numcosttotal">
-				<anchored to="numcost" position="below" offset="0,10" width="50"/>
+			<numberfield name="numweight">
+				<anchored to="numvalue" position="below" offset="0,10"/>
 				<frame>
 					<name>modifier</name>
 					<offset>3,3,3,3</offset>
 				</frame>
 				<font>sheetlabelsmall</font>
-				<source>
-					<name>numcost</name>
-					<op>+</op>
-				</source>             
-				<source>
-					<name>numquantity</name>
-					<op>*</op>
-				</source>
-            </linkednumber>
-
-			<stringcontrol name="rangelabel">
-				<anchored to="costtotallabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Range:</static>
-			</stringcontrol>
-
-			<stringfield name="range">
-				<anchored to="numcosttotal" position="belowleft" offset="0,5" width="110"/>
-				<frame>
-					<name>textline</name>
-					<offset>1,5,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-			</stringfield>
-
-			<stringcontrol name="durationlabel">
-				<anchored to="rangelabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Duration:</static>
-			</stringcontrol>
-
-			<stringfield name="duration">
-				<anchored to="range" position="below" offset="0,5"/>
-				<frame>
-					<name>textline</name>
-					<offset>1,5,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>range</prev>
-					<next>casting</next>
-				</tabtarget>
-			</stringfield>
-
-			<stringcontrol name="castinglabel">
-				<anchored to="durationlabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Casting Difficulty:</static>
-			</stringcontrol>
-
-			<stringfield name="casting">
-				<anchored to="duration" position="below" offset="0,5"/>
-				<frame>
-					<name>textline</name>
-					<offset>1,5,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>duration</prev>
-					<next>effect</next>
-				</tabtarget>
-				<empty>TSD</empty>
-			</stringfield>
-
-			<stringcontrol name="effectsteplabel">
-				<anchored to="castinglabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Effect Step:</static>
-			</stringcontrol>
-
-			<numberfield name="effect">
-				<anchored to="casting" position="belowleft" offset="0,5" width="25"/>
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>casting</prev>
-					<next>effecttext</next>
-				</tabtarget>
-			</numberfield>
-
-			<stringcontrol name="effecttextlabel">
-				<anchored to="effectsteplabel" position="below" offset="0,5"/>
-				<font>sheetlabelsmall</font>
-				<static>Effect:</static>
-			</stringcontrol>
-			
-			<stringfield name="effecttext">
-				<anchored to="effect" position="belowleft" offset="0,5" width="110"/>
-				<frame>
-					<name>textline</name>
-					<offset>1,5,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>duration</prev>
-					<next>effect</next>
-				</tabtarget>
-				<empty></empty>
-			</stringfield>
+            </numberfield>
 			
 			<stringcontrol name="descriptionlabel">
-				<anchored to="effecttextlabel" position="belowleft" offset="0,10"/>
+				<anchored to="weightlabel" position="belowleft" offset="0,10"/>
 				<font>sheettext</font>
 				<static>Description</static>
 				<center/>

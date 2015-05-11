@@ -775,7 +775,6 @@
 		</sheetdata>
 	</windowclass>
 	
-<!-- ITEMS LIST ITEM -->	<!--{{{-->
 	<windowclass name="item_listitem">
 		<sizelimits>
 			<minimum>
@@ -862,7 +861,7 @@
 				</script>
 			</textlistitemvalue>
 
- 			<textlistitemnumber name="valuesp">
+ 			<textlistitemnumber name="numvalue">
 				<anchored>
 					<left>
 						<anchor>left</anchor>
@@ -905,11 +904,11 @@
 				<font>sheettextsmall</font>
 				<center />
 				<source>
-					<name>quantity</name>
+					<name>numvalue</name>
 					<op>+</op>
 				</source>
 				<source>
-					<name>valuesp</name>
+					<name>quantity</name>
 					<op>*</op>
 				</source>
 				<frame>
@@ -919,7 +918,7 @@
 				<readonly />
 			</linkednumber>
 
- 			<textlistitemnumber name="weight">
+ 			<textlistitemnumber name="numweight">
 				<anchored>
 					<left>
 						<anchor>left</anchor>
@@ -961,11 +960,11 @@
 				</tabtarget>
 				<font>sheettextsmall</font>
 				<source>
-					<name>quantity</name>
+					<name>numweight</name>
 					<op>+</op>
 				</source>
 				<source>
-					<name>weight</name>
+					<name>quantity</name>
 					<op>*</op>
 				</source>
 				<frame>
@@ -1034,7 +1033,7 @@
 
 				
 		</sheetdata>
-	</windowclass><!--}}}-->
+	</windowclass>
 	
 
 </root>
