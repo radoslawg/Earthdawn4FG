@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<includefile source="ref/reference_templates.xml" />
+	<includefile source="ref/reference_spells.xml" />
+	<includefile source="ref/reference_basicclasses.xml" />
+    <includefile source="ref/reference_skills.xml" />
+    <includefile source="ref/reference_talents.xml" />
+	<includefile source="ref/reference_items.xml" />
+	<includefile source="ref/reference_itemtable.xml" />
+</root>

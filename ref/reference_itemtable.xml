@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+	<windowclass name="reference_itemtablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,165,20</bounds>
+			</string_list_link>
+			<number_reftable name="numvalue">
+				<bounds>260,2,50,20</bounds>
+				<center />
+			</number_reftable>
+			<number_reftable name="numweight">
+				<bounds>320,2,50,20</bounds>
+				<center />
+			</number_reftable>
+			<string_reftable name="availability">
+				<bounds>385,2,60,20</bounds>
+				<center />
+			</string_reftable>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="reference_itemtablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.items</datasource>
+				<class>reference_itemtablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_itemtablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="550" height="650" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			<label_reftable name="headername">
+				<bounds>30,55,180,20</bounds>
+				<static>Name</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headercost">
+				<bounds>260,55,120,20</bounds>
+				<static>Cost</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headerweight">
+				<bounds>355,55,50,20</bounds>
+				<static>Weight</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headeravailability">
+				<bounds>400,55,100,20</bounds>
+				<static>Availability</static>
+				<center />
+			</label_reftable>
+
+			<windowlist name="grouplist">
+				<bounds>35,90,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_itemtablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+</root>
