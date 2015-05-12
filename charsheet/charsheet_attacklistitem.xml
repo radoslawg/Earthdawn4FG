@@ -55,7 +55,8 @@
 				<invisible />
 				<bounds>0,0,0,0</bounds>
 			</stringfield>
-			<modifiernumber name="attackstep" source="attackstep.total">
+			<step_linked_modifier_roll name="attackstep" source="attackstep.total">
+				<readonly />
 				<anchored>
 					<left>
 						<anchor>left</anchor>
@@ -69,112 +70,11 @@
 						<width>20</width>
 					</size>
 				</anchored>
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<font>sheetnumber</font>
-				<readonly />
 				<source>
 					<name>attackbonusonestep</name>
 					<op>+</op>
 				</source>
-				<source>
-					<name>attackbonustwostep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>attackbonusthreestep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>attackbonusfourstep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>attackbonusfivestep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>attackbonussixstep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>attackbonussevenstep</name>
-					<op>+</op>
-				</source>
-				<modifierfield>attackstep.total.temp</modifierfield>
-				<modifierloc>right</modifierloc>
-				<script>
-					function onDrag(button,x,y,dragdata)
-						dragdata.setType("dice");
-						dragdata.setSlot(1);
-						dice = {};
-						mod = 0;
-						dice, mod = Step.getStepDice(getValue());
-						dragdata.setDieList(dice);
-						
-						dragdata.setDescription(window.name.getValue() .. " (Attack Step " .. getValue() .. ")" );
-						dragdata.setNumberData(mod);
-						
-						return true;
-					end	
-
-					function onDoubleClick()
-						dice = {};
-						mod = 0;
-						dice, mod = Step.getStepDice(getValue());
-
-						attackkarmastep = 0;
-						karmaaddedtext = "";
-
-						if window.karmaonattackvis.getState() and window.karmaonattack.getState() then
-							local node = window.getDatabaseNode().getParent().getParent();
-							local source = node.getChild("discipline");
-							local templist = source.getChildren();
-							found = 0;
-							attackkarmastep = 0;
-							for i in pairs(templist) do
-								if templist[i].getChild("name") then
-									local discname = templist[i].getChild("name").getValue();
-									if discname == window.attackkarmaclass.getValue() and found == 0 and templist[i].getChild("curr").getValue() &gt;= 1 then
-										found = 1;
-										attackkarmastep = templist[i].getChild("kstep").getValue();
-										templist[i].getChild("curr").setValue(templist[i].getChild("curr").getValue() - 1);
-										karmaaddedtext = " + Step " .. attackkarmastep .. " " .. window.attackkarmaclass.getValue() .. " Karma";
-										
-									end
-								end
-							end
-							if attackkarmastep &gt;= 1 then
-								dicea = {};
-								dicea, mod = Step.getStepDice(attackkarmastep);
-								for k,v in pairs(dicea) do 
-									table.insert(dice, v) 
-								end
-							end
-						end
-						if window.strainonattack.getState() == true then
-							window.attackstrain.onDoubleClick();
-						end
-						ChatManager.control.throwDice("dice",dice, mod, window.name.getValue() .. " (Attack Step " .. getValue() .. karmaaddedtext .. ")");
-					end
-
-					function onHover(state)
-						if state then
-							setColor("#FF228822");
-							setFrame("sheetfocus", 3, 3, 3, 3);
-							window.setFrame("rowshade");
-						else
-							if hasFocus() == false then
-								setColor(nil);
-								setFrame("modifier", 3, 3, 3, 3);
-								window.setFrame(nil);
-							end
-						end
-					end
-				</script>
-			</modifiernumber>
+			</step_linked_modifier_roll>
 			<stringcontrol name="karmaondamagelabel">
 				<bounds>0,0,0,0</bounds>
 				<font>sheetlabelsmall</font>
@@ -194,7 +94,7 @@
 				<bounds>0,0,0,0</bounds>
 			</stringfield>
 			
-			<modifiernumber name="damagestep" source="damagestep.total">
+			<step_linked_modifier_roll name="damagestep" source="damagestep.total">
 				<anchored>
 					<left>
 						<anchor>left</anchor>
@@ -218,102 +118,7 @@
 					<name>damagebonusonestep</name>
 					<op>+</op>
 				</source>
-				<source>
-					<name>damagebonustwostep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>damagebonusthreestep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>damagebonusfourstep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>damagebonusfivestep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>damagebonussixstep</name>
-					<op>+</op>
-				</source>
-				<source>
-					<name>damagebonussevenstep</name>
-					<op>+</op>
-				</source>
-				<modifierfield>damagestep.total.temp</modifierfield>
-				<modifierloc>right</modifierloc>
-				<script>
-					function onDrag(button,x,y,dragdata)
-						dragdata.setType("dice");
-						dragdata.setSlot(1);
-						dice = {};
-						mod = 0;
-						dice, mod = Step.getStepDice(getValue());
-						dragdata.setDieList(dice);
-						
-						dragdata.setDescription(window.name.getValue() .. " (Damage Step " .. getValue() .. ")" );
-						dragdata.setNumberData(mod);
-						
-						return true;
-					end	
-					function onDoubleClick()
-						dice = {};
-						mod = 0;
-						dice, mod = Step.getStepDice(getValue());
-
-						damagekarmastep = 0;
-						karmaaddedtext = "";
-
-						if window.karmaondamagevis.getState() and window.karmaondamage.getState() then
-							local node = window.getDatabaseNode().getParent().getParent();
-							local source = node.getChild("discipline");
-							local templist = source.getChildren();
-							found = 0;
-							damagekarmastep = 0;
-							for i in pairs(templist) do
-								if templist[i].getChild("name") then
-									local discname = templist[i].getChild("name").getValue();
-									if discname == window.damagekarmaclass.getValue() and found == 0 and templist[i].getChild("curr").getValue() &gt;= 1 then
-										found = 1;
-										damagekarmastep = templist[i].getChild("kstep").getValue();
-										templist[i].getChild("curr").setValue(templist[i].getChild("curr").getValue() - 1);
-										karmaaddedtext = " + Step " .. damagekarmastep .. " " .. window.damagekarmaclass.getValue() .. " Karma";
-										
-									end
-								end
-							end
-							if damagekarmastep &gt;= 1 then
-								dicea = {};
-								dicea, mod = Step.getStepDice(damagekarmastep);
-								for k,v in pairs(dicea) do 
-									table.insert(dice, v) 
-								end
-							end
-						end
-						if window.strainondamage.getState() == true then
-							window.damagestrain.onDoubleClick();
-						end
-						ChatManager.control.throwDice("dice",dice, mod, window.name.getValue() .. " (Damage Step " .. getValue() .. karmaaddedtext .. ")");
-					end
-
-
-					function onHover(state)
-						if state then
-							setColor("#FF228822");
-							setFrame("sheetfocus", 3, 3, 3, 3);
-							window.setFrame("rowshade");
-						else
-							if hasFocus() == false then
-								setColor(nil);
-								setFrame("modifier", 3, 3, 3, 3);
-								window.setFrame(nil);
-							end
-						end
-					end
-				</script>
-			</modifiernumber>
+			</step_linked_modifier_roll>
 
 			<checkbox name="physicaldefense">
 				<anchored>
@@ -462,87 +267,6 @@
 				<font>sheettextsmall</font>
 				<empty>melee</empty>
 			</textlistitemvalue>
-
-			<checkbox name="strainonattack">
-				<anchored>
-					<left>
-						<anchor>left</anchor>
-						<offset>366</offset>
-					</left>
-					<top>
-						<anchor>top</anchor>
-						<offset>3</offset>
-					</top>
-					<size>
-						<width>15</width>
-						<height>15</height>
-					</size>
-				</anchored>
-				<script>
-					function onInit()
-						if window.strainonattack.getValue() == 1 then
-							window.attackstrain.setVisible(true);
-							window.strainonattack.setVisible(false);
-						else
-							window.attackstrain.setVisible(false);
-							window.strainonattack.setVisible(true);
-						end
-					end
-					function onClickDown(button, x, y)
-						return false;
-					end
-					function onValueChanged()
-						if window.strainonattack.getValue() == 1 then
-							window.attackstrain.setVisible(true);
-							window.strainonattack.setVisible(false);
-						else
-							window.attackstrain.setVisible(false);
-							window.strainonattack.setVisible(true);
-						end
-					end
-				</script>
-			</checkbox>
-			
-			<checkbox name="strainondamage">
-				<anchored>
-					<left>
-						<anchor>left</anchor>
-						<offset>384</offset>
-					</left>
-					<top>
-						<anchor>top</anchor>
-						<offset>3</offset>
-					</top>
-					<size>
-						<width>15</width>
-						<height>15</height>
-					</size>
-				</anchored>
-				<script>
-					function onInit()
-						if window.strainondamage.getValue() == 1 then
-							window.damagestrain.setVisible(true);
-							window.strainondamage.setVisible(false);
-						else
-							window.damagestrain.setVisible(false);
-							window.strainondamage.setVisible(true);
-						end
-					end
-					function onClickDown(button, x, y)
-						return false;
-					end
-					function onValueChanged()
-						if window.strainondamage.getValue() == 1 then
-							window.damagestrain.setVisible(true);
-							window.strainondamage.setVisible(false);
-						else
-							window.damagestrain.setVisible(false);
-							window.strainondamage.setVisible(true);
-						end
-					end
-				</script>
-			</checkbox>
-
 
 			<numberfield name="attackstrain"><!--{{{-->
 				<anchored>
