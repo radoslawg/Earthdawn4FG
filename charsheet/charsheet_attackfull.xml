@@ -1,378 +1,47 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="2.0">
  	<windowclass name="attackfull">
-		<frame>referencebox</frame>
+		<frame>recordsheet</frame>
 		<placement>
-			<size>
-				<height>380</height>
-				<width>475</width>
-			</size>
+			<size height="380" width="500" />
 		</placement>
 		<sizelimits>
-			<minimum>
-				<height>380</height>
-				<width>475</width>
-			</minimum>
-			<maximum>
-				<height>380</height>
-				<width>475</width>
-			</maximum>
-		</sizelimits>
-		<minimize>minimized_combat</minimize>
-		<tooltip>
-			<field>name</field>
-		</tooltip>
+			<minimum width="500" height="380" />
+			<maximum width="500" height="380" />
+		</sizelimits>        
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
 		<sheetdata>
-			<stringfield name="name">
-				<bounds>20,17,437,25</bounds>
-				<font>titlefont</font>
-				<tabtarget>
-					<prev>description</prev>
-					<next>attribname</next>
-				</tabtarget>
-				<frame>
-					<name>sheetgroup</name>
-				<offset>10,7,3,-1</offset>
-				</frame>
-				<center />
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-				<nodrag />
-			</stringfield>
-			
+            <sub_record_header name="header">
+                <class>attack_full_header</class>
+            </sub_record_header>  
+			<ref_contentframe/>
 
-<!--ATTACK CALCS--><!--{{{-->
-			<genericcontrol name="attackstepframe">
-				<bounds>10,42,226,156</bounds>
-				<frame>
-					<name>modifier</name>
-				</frame>
-			</genericcontrol>
+
 			<stringcontrol name="attacksteplabel">
-				<anchored>
-					<to>attackstepframe</to>
-					<position>insidetop</position>
-					<offset>-75,5</offset>
-				</anchored>
-				<font>sheetlabelsmallbold</font>
+				<anchored to="contentframe" position="insidetopleft" width="75"/>
+				<font>sheetlabel</font>
 				<static>Attack Step:</static>
 			</stringcontrol>
-			
-<!--attackbonusone--><!--{{{-->
-			<nonlabeledstring name="attackbonusonesourcename"><!--{{{-->
-				<bounds>20,55,140,20</bounds>
-				<tabtarget>
-					<prev>name</prev>
-					<next>attribute</next>
-				</tabtarget>
-				<empty>Attack Source</empty>
-			</nonlabeledstring><!--}}}-->
 
-			<numberfield name="attackbonusonestep"><!--{{{-->
-				<bounds>165,53,25,20</bounds>
-				<tabtarget>
-					<prev>attribname</prev>
-					<next>rank</next>
-				</tabtarget>
-				<font>sheettextsmall</font>
-				<frame>
-					<name>textline</name>
-					<offset>0,-1,0,1</offset>
-				</frame>
-			</numberfield>
+			<step_roll name="attackstep" source="attackstep.total">
+				<anchored to="attacksteplabel" position="rightlow" offset="10,0" width="25"/>
+			</step_roll>
 
-
-			<numberfield name="attackbonussevenstep"><!--{{{-->
-				<bounds>165,173,25,20</bounds>
-				<tabtarget>
-					<prev>attribname</prev>
-					<next>rank</next>
-				</tabtarget>
-				<font>sheettextsmall</font>
-				<frame>
-					<name>textline</name>
-					<offset>0,-1,0,1</offset>
-				</frame>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-					function onHover(state)
-						if state then
-							setColor("#FF990099");
-						else
-							if hasFocus() == false then
-								setColor(nil);
-							end
-						end
-					end
-				</script>
-			</numberfield><!--}}}-->
-<!--}}}-->
-
-<!--ATTACK STEP--><!--{{{-->
-			<stringcontrol name="karmaonattacklabel">
-				<bounds>195,47,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Karma:</static>
-				<invisible />
-			</stringcontrol>
-			<checkbox name="karmaonattackvis">
-				<invisible />
-				<bounds>198,52,25,25</bounds>
-			</checkbox>
-			<checkbox name="karmaonattack">
-				<invisible />
-				<disabled />
-				<checked />
-				<bounds>198,52,25,25</bounds>
-				<script>
-					function onValueChanged()
-						window.karmaonattackvis.setState(window.karmaonattack.isVisible());
-					end
-				</script>
-			</checkbox>
-
-			<stringcontrol name="attacksteplabel">
-				<bounds>193,70,75,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>ATTACK</static>
-			</stringcontrol>
-
-			<stringfield name="attackkarmaclass" source="attackkarmaclass">
-				<invisible />
-				<bounds>193,70,75,20</bounds>
-			</stringfield>
-
-			<step_linked_modifier_roll name="attackstep" source="attackstep.total">
-				<bounds>199,80,25,25</bounds>
-
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<font>sheetnumber</font>
-				<readonly />
-				<source>
-					<name>attackbonusonestep</name>
-					<op>+</op>
-				</source>
-			</step_linked_modifier_roll>
-			<stringcontrol name="steplabel">
-				<bounds>200,103,75,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>STEP</static>
-			</stringcontrol>
-<!--}}}-->
-
-<!--}}}-->
-
-<!--DAMAGE CALCS--><!--{{{-->
-			<genericcontrol name="damagestepframe">
-				<bounds>236,42,226,156</bounds>
-				<frame>
-					<name>modifier</name>
-				</frame>
-			</genericcontrol>
 			<stringcontrol name="damagesteplabel">
-				<anchored>
-					<to>damagestepframe</to>
-					<position>insidetop</position>
-					<offset>-75,5</offset>
-				</anchored>
-				<font>sheetlabelsmallbold</font>
+				<anchored to="attacksteplabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
 				<static>Damage Step:</static>
 			</stringcontrol>
 			
-<!--damagebonusone--><!--{{{-->
-			<nonlabeledstring name="damagebonusonesourcename"><!--{{{-->
-				<!-- <bounds>20,55,140,20</bounds> -->
-				<bounds>246,55,140,20</bounds>
-				<tabtarget>
-					<prev>name</prev>
-					<next>attribute</next>
-				</tabtarget>
-				<empty>Damage Source</empty>
-				<script file="scripts/statmodifier.lua" />
-				<script>
-					localwidget = nil;
-					function onDrop(x, y, draginfo)
-						if draginfo.getType() == "string" then
-							setValue(draginfo.getStringData());
-							ret = setStep("damagebonusonestep");
-							if ret ~= true then
-								ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
-							end
-							if ret ~= true then
-								ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
-							end	
-							if ret ~= true then
-								ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
-							end	
-							if ret then
-								window.damagebonusonestep.setReadOnly(true);
-								localwidget.setVisible(true);
-							else
-								window.damagebonusonestep.setReadOnly(false);
-								localwidget.setVisible(false);
-							end
-						end
-						return true;
-					end
-					function onInit()
- 						localwidget = addBitmapWidget("indicator_linked");
-						localwidget.setPosition("left", -5, -3);
-						localwidget.setVisible(false);
-						ret = setStep("damagebonusonestep");
-						if ret ~= true then
-							ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
-						end
-						if ret ~= true then
-							ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
-						end	
-						if ret ~= true then
-							ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
-						end	
-						if ret then
-							window.damagebonusonestep.setReadOnly(true);
-							localwidget.setVisible(true);
-						else
-							window.damagebonusonestep.setReadOnly(false);
-							localwidget.setVisible(false);
-						end
-					end
-					function onLoseFocus()
-						ret = setStep("damagebonusonestep");
-						if ret ~= true then
-							ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
-						end
-						if ret ~= true then
-							ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
-						end	
-						if ret ~= true then
-							ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
-						end	
-						if ret then
-							window.damagebonusonestep.setReadOnly(true);
-							localwidget.setVisible(true);
-						else
-							window.damagebonusonestep.setReadOnly(false);
-							localwidget.setVisible(false);
-						end
-						
-						super.onLoseFocus();
-					end
-				</script>
-			</nonlabeledstring><!--}}}-->
+			<step_roll name="damagestep" source="damagestep.total">
+				<anchored to="attackstep" position="belowleft" offset="0, 7" width="25" />
+			</step_roll>
 
-			<numberfield name="damagebonusonestep"><!--{{{-->
-				<!--<bounds>165,53,25,20</bounds>-->
-				<bounds>391,53,25,20</bounds>
-				<tabtarget>
-					<prev>attribname</prev>
-					<next>rank</next>
-				</tabtarget>
-				<font>sheettextsmall</font>
-				<frame>
-					<name>textline</name>
-					<offset>0,-1,0,1</offset>
-				</frame>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-					function onHover(state)
-						if state then
-							setColor("#FF990099");
-						else
-							if hasFocus() == false then
-								setColor(nil);
-							end
-						end
-					end
-				</script>
-			</numberfield><!--}}}-->
-
-<!--DAMAGE STEP--><!--{{{-->
-			<stringcontrol name="karmaondamagelabel">
-				<!--<bounds>195,47,75,20</bounds>-->
-				<bounds>421,47,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Karma:</static>
-				<invisible />
-			</stringcontrol>
-			<checkbox name="karmaondamagevis">
-				<invisible />
-				<!--<bounds>198,52,25,25</bounds>-->
-				<bounds>424,52,25,25</bounds>
-			</checkbox>
-			<checkbox name="karmaondamage">
-				<invisible />
-				<disabled />
-				<checked />
-				<!--<bounds>198,52,25,25</bounds>-->
-				<bounds>424,53,25,25</bounds>
-				<script>
-					function onValueChanged()
-						window.karmaondamagevis.setState(window.karmaondamage.isVisible());
-					end
-				</script>
-			</checkbox>
-
-			<stringcontrol name="damagesteplabel">
-				<!--<bounds>193,70,75,20</bounds>-->
-				<bounds>417,70,75,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>DAMAGE</static>
-			</stringcontrol>
-
-			<stringfield name="damagekarmaclass" source="damagekarmaclass">
-				<invisible />
-				<bounds>193,70,75,20</bounds>
-			</stringfield>
-
-			<step_linked_modifier_roll name="damagestep" source="damagestep.total">
-				<!--<bounds>199,80,25,25</bounds>-->
-				<bounds>425,80,25,25</bounds>
-				<readonly />
-				<source>
-					<name>damagebonusonestep</name>
-					<op>+</op>
-				</source>
-				<modifierfield>damagestep.total.temp</modifierfield>
-				<modifierloc>bottomright</modifierloc>
-			</step_linked_modifier_roll>
-			<stringcontrol name="steplabel">
-				<!--<bounds>200,103,75,20</bounds>-->
-				<bounds>426,103,75,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>STEP</static>
-			</stringcontrol>
-<!--}}}-->
-
-
-<!--}}}-->
-
-<!--VS DEF--><!--{{{-->
 			<genericcontrol name="defenseframe">
-				<bounds>10,194,160,40</bounds>
+				<anchored to="attackstep" position="righthigh" offset="25,0" width="160" height="60"/>
 				<frame>
-					<name>modifier</name>
+					<name>groupbox</name>
 				</frame>
 			</genericcontrol>
 			<stringcontrol name="deflabel">
@@ -779,6 +448,20 @@
 			
 		</sheetdata>
 	</windowclass><!--}}}-->
+	
+	<windowclass name="attack_full_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<anchor_record_header_right />
 
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="5" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
 
 </root>
