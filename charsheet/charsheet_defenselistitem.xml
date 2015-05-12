@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="defense_listitem">
+		<sizelimits>
+			<minimum>
+				<height>20</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<checkbox name="activebox">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>5</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</checkbox>
+			
+			<textlistitemvalue name="name">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>33</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>150</width>
+					</size>
+				</anchored>
+				<tabtarget>
+					<next>physicaldefensenum</next>
+					<prev>initmodnum</prev>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<script>
+					function onDoubleClick()
+						win = Interface.openWindow("defensefull",window.getDatabaseNode());
+					end
+					function onLoseFocus()
+						super.onLoseFocus();
+						window.windowlist.applySort();
+					end
+				</script>
+			</textlistitemvalue>
+			
+			<modifiernumber name="physicaldefensenum" source="physicaldefensenum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>188</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>physicaldefensenum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>physicaldefensenum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+			<modifiernumber name="spelldefensenum" source="spelldefensenum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>214</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>spelldefensenum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>spelldefensenum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+			<modifiernumber name="socialdefensenum" source="socialdefensenum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>240</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>socialdefensenum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>socialdefensenum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+
+			<modifiernumber name="physicalarmornum" source="physicalarmornum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>270</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>physicalarmornum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>physicalarmornum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+			<modifiernumber name="mysticarmornum" source="mysticarmornum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>297</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>mysticarmornum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>mysticarmornum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+
+			<modifiernumber name="initmodnum" source="initmodnum.total"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>332</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>1,0,0,0</offset>
+				</frame>
+				<font>sheettextsmall</font>
+				<readonly />
+				<source>
+					<name>initmodnum.base</name>
+					<op>+</op>
+				</source>
+				<modifierfield>initmodnum.total.temp</modifierfield>
+				<modifierloc>right</modifierloc>
+				<script>
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								window.setFrame(nil);
+							end
+						end
+					end
+				</script>
+			</modifiernumber><!--}}}-->
+
+			<checkbox name="strainonattack"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>366</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onInit()
+						super.onInit();
+						if window.strainonattack.getState() == true then
+							window.attackstrain.setVisible(true);
+							window.strainonattack.setVisible(false);
+						else
+							window.attackstrain.setVisible(false);
+							window.strainonattack.setVisible(true);
+						end
+					end
+					function onClickDown(button, x, y)
+						return false;
+					end
+					function onValueChanged()
+						if window.strainonattack.getState() == true then
+							window.attackstrain.setVisible(true);
+							window.strainonattack.setVisible(false);
+						else
+							window.attackstrain.setVisible(false);
+							window.strainonattack.setVisible(true);
+						end
+					end
+				</script>
+			</checkbox><!--}}}-->
+			
+			<checkbox name="strainondamage"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>384</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>3</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<script>
+					function onInit()
+						super.onInit();
+						if window.strainondamage.getState() == true then
+							window.damagestrain.setVisible(true);
+							window.strainondamage.setVisible(false);
+						else
+							window.damagestrain.setVisible(false);
+							window.strainondamage.setVisible(true);
+						end
+					end
+					function onClickDown(button, x, y)
+						return false;
+					end
+					function onValueChanged()
+						if window.strainondamage.getState() == true then
+							window.damagestrain.setVisible(true);
+							window.strainondamage.setVisible(false);
+						else
+							window.damagestrain.setVisible(false);
+							window.strainondamage.setVisible(true);
+						end
+					end
+				</script>
+			</checkbox><!--}}}-->
+
+			<numberfield name="attackstrain"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>363</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumber</font>
+				<script>
+					function onDoubleClick()
+						if User.isHost() then
+							userguy = GmIdentityManager.getCurrent();
+						else
+							userguy = User.getIdentityLabel();
+						end
+						window.windowlist.window.getDatabaseNode().getChild("health.damage").setValue(window.windowlist.window.getDatabaseNode().getChild("health.damage").getValue() + getValue());
+						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+
+						if getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.woundthreshold.total").getValue() then
+							window.windowlist.window.getDatabaseNode().getChild("health.wounds").setValue(window.windowlist.window.getDatabaseNode().getChild("health.wounds").getValue() + 1);
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Wound [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						end
+						if window.windowlist.window.getDatabaseNode().getChild("totdamage").getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.death.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						elseif window.windowlist.window.getDatabaseNode().getChild("totdamage").getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.unconscious.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						end
+							
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF882222");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+								window.setFrame(nil);
+							end
+						end
+					end
+					function onWheel()
+						return true;
+					end
+				</script>
+				<readonly />
+			</numberfield><!--}}}-->
+
+			<numberfield name="damagestrain"><!--{{{-->
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>381</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>-1</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<font>sheetnumber</font>
+				<script>
+					function onDoubleClick()
+						if User.isHost() then
+							userguy = GmIdentityManager.getCurrent();
+						else
+							userguy = User.getIdentityLabel();
+						end
+						window.windowlist.window.getDatabaseNode().getChild("health.damage").setValue(window.windowlist.window.getDatabaseNode().getChild("health.damage").getValue() + getValue());
+						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+
+						if getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.woundthreshold.total").getValue() then
+							window.windowlist.window.getDatabaseNode().getChild("health.wounds").setValue(window.windowlist.window.getDatabaseNode().getChild("health.wounds").getValue() + 1);
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Wound [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						end
+						if window.windowlist.window.getDatabaseNode().getChild("totdamage").getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.death.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						elseif window.windowlist.window.getDatabaseNode().getChild("totdamage").getValue() &gt;= window.windowlist.window.getDatabaseNode().getChild("health.unconscious.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.windowlist.window.getDatabaseNode().getChild("name").getValue(), mode = "emote"});
+						end
+							
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF882222");
+							setFrame("sheetfocus", 2, 2, 2, 2);
+							window.setFrame("rowshade");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 2, 2, 2, 2);
+								window.setFrame(nil);
+							end
+						end
+					end
+					function onWheel()
+						return true;
+					end
+				</script>
+				<readonly />
+			</numberfield><!--}}}-->
+	
+			<buttoncontrol name="fulldefense">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>398</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_zoom</normal>
+					<hover>indicator_casterprep</hover>
+					<pressed>indicator_zoom</pressed>
+				</icon> 	
+				<script>
+					function onButtonPress()
+						win = Interface.openWindow("defensefull",window.getDatabaseNode());
+					end
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowreferencefield name="defense_notes_shortcut">
+				<anchored>
+					<right>
+						<anchor>left</anchor>
+						<offset>445</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+				<script>
+					function onHover(state)
+						if state then
+							window.setFrame("rowshade");
+						else
+							window.setFrame(nil);
+						end
+					end
+				</script>
+			</windowreferencefield>
+
+				
+		</sheetdata>
+	</windowclass>
+</root>

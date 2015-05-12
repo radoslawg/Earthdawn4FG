@@ -14,6 +14,10 @@
 	<includefile source="charsheet/charsheet_spells.xml" />
 	<includefile source="charsheet/charsheet_itemfull.xml" />
 	<includefile source="charsheet/charsheet_inventory.xml" />
+	<includefile source="charsheet/charsheet_defensefull.xml" />
+	<includefile source="charsheet/charsheet_defenselistitem.xml" />
+	<includefile source="charsheet/charsheet_attackfull.xml" />
+	<includefile source="charsheet/charsheet_attacklistitem.xml" />
 	<includefile source="charsheet/charsheet_combat.xml" />
 	<includefile source="charsheet/charsheet_threads.xml" />
 	<includefile source="charsheet/charsheet_notes.xml" />

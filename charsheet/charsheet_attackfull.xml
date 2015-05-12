@@ -1,0 +1,2418 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+ 	<windowclass name="attackfull"><!--{{{-->
+		<frame>referencebox</frame>
+		<placement>
+			<size>
+				<height>380</height>
+				<width>475</width>
+			</size>
+		</placement>
+		<sizelimits>
+			<minimum>
+				<height>380</height>
+				<width>475</width>
+			</minimum>
+			<maximum>
+				<height>380</height>
+				<width>475</width>
+			</maximum>
+		</sizelimits>
+		<minimize>minimized_combat</minimize>
+		<tooltip>
+			<field>name</field>
+		</tooltip>
+		<sheetdata>
+			<stringfield name="name">
+				<bounds>20,17,437,25</bounds>
+				<font>titlefont</font>
+				<tabtarget>
+					<prev>description</prev>
+					<next>attribname</next>
+				</tabtarget>
+				<frame>
+					<name>sheetgroup</name>
+				<offset>10,7,3,-1</offset>
+				</frame>
+				<center />
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+				</script>
+				<nodrag />
+			</stringfield>
+			
+
+<!--ATTACK CALCS--><!--{{{-->
+			<genericcontrol name="attackstepframe">
+				<bounds>10,42,226,156</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="attacksteplabel">
+				<anchored>
+					<to>attackstepframe</to>
+					<position>insidetop</position>
+					<offset>-75,5</offset>
+				</anchored>
+				<font>sheetlabelsmallbold</font>
+				<static>Attack Step:</static>
+			</stringcontrol>
+			
+<!--attackbonusone--><!--{{{-->
+			<nonlabeledstring name="attackbonusonesourcename"><!--{{{-->
+				<bounds>20,55,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonusonestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonusonestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonusonestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonusonestep", getValue());
+							end	
+							if ret then
+								window.attackbonusonestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonusonestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonusonestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusonestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusonestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusonestep", getValue());
+						end	
+						if ret then
+							window.attackbonusonestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusonestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonusonestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusonestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusonestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusonestep", getValue());
+						end	
+						if ret then
+							window.attackbonusonestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusonestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonusonestep"><!--{{{-->
+				<bounds>165,53,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--attackbonustwo--><!--{{{-->
+			<nonlabeledstring name="attackbonustwosourcename"><!--{{{-->
+				<bounds>20,75,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonustwostep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonustwostep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonustwostep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonustwostep", getValue());
+							end	
+							if ret then
+								window.attackbonustwostep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonustwostep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonustwostep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonustwostep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonustwostep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonustwostep", getValue());
+						end	
+						if ret then
+							window.attackbonustwostep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonustwostep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonustwostep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonustwostep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonustwostep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonustwostep", getValue());
+						end	
+						if ret then
+							window.attackbonustwostep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonustwostep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonustwostep"><!--{{{-->
+				<bounds>165,73,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--attackbonusthree--><!--{{{-->
+			<nonlabeledstring name="attackbonusthreesourcename"><!--{{{-->
+				<bounds>20,95,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonusthreestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonusthreestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonusthreestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonusthreestep", getValue());
+							end	
+							if ret then
+								window.attackbonusthreestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonusthreestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonusthreestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusthreestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusthreestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusthreestep", getValue());
+						end	
+						if ret then
+							window.attackbonusthreestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusthreestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonusthreestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusthreestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusthreestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusthreestep", getValue());
+						end	
+						if ret then
+							window.attackbonusthreestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusthreestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonusthreestep"><!--{{{-->
+				<bounds>165,93,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--attackbonusfour--><!--{{{-->
+			<nonlabeledstring name="attackbonusfoursourcename"><!--{{{-->
+				<bounds>20,115,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonusfourstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonusfourstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonusfourstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonusfourstep", getValue());
+							end	
+							if ret then
+								window.attackbonusfourstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonusfourstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonusfourstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusfourstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusfourstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusfourstep", getValue());
+						end	
+						if ret then
+							window.attackbonusfourstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusfourstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonusfourstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusfourstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusfourstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusfourstep", getValue());
+						end	
+						if ret then
+							window.attackbonusfourstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusfourstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonusfourstep"><!--{{{-->
+				<bounds>165,113,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--attackbonusfive--><!--{{{-->
+			<nonlabeledstring name="attackbonusfivesourcename"><!--{{{-->
+				<bounds>20,135,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonusfivestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonusfivestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonusfivestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonusfivestep", getValue());
+							end	
+							if ret then
+								window.attackbonusfivestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonusfivestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonusfivestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusfivestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusfivestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusfivestep", getValue());
+						end	
+						if ret then
+							window.attackbonusfivestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusfivestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonusfivestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonusfivestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonusfivestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonusfivestep", getValue());
+						end	
+						if ret then
+							window.attackbonusfivestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonusfivestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonusfivestep"><!--{{{-->
+				<bounds>165,133,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--attackbonussix--><!--{{{-->
+			<nonlabeledstring name="attackbonussixsourcename"><!--{{{-->
+				<bounds>20,155,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonussixstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonussixstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonussixstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonussixstep", getValue());
+							end	
+							if ret then
+								window.attackbonussixstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonussixstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonussixstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonussixstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonussixstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonussixstep", getValue());
+						end	
+						if ret then
+							window.attackbonussixstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonussixstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonussixstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonussixstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonussixstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonussixstep", getValue());
+						end	
+						if ret then
+							window.attackbonussixstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonussixstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonussixstep"><!--{{{-->
+				<bounds>165,153,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--attackbonusseven--><!--{{{-->
+			<nonlabeledstring name="attackbonussevensourcename"><!--{{{-->
+				<bounds>20,175,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Attack Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("attackbonussevenstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "attackbonussevenstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "attackbonussevenstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "attackbonussevenstep", getValue());
+							end	
+							if ret then
+								window.attackbonussevenstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.attackbonussevenstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("attackbonussevenstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonussevenstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonussevenstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonussevenstep", getValue());
+						end	
+						if ret then
+							window.attackbonussevenstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonussevenstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("attackbonussevenstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "attackbonussevenstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "attackbonussevenstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "attackbonussevenstep", getValue());
+						end	
+						if ret then
+							window.attackbonussevenstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.attackbonussevenstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="attackbonussevenstep"><!--{{{-->
+				<bounds>165,173,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--ATTACK STEP--><!--{{{-->
+			<stringcontrol name="karmaonattacklabel">
+				<bounds>195,47,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Karma:</static>
+				<invisible />
+			</stringcontrol>
+			<checkbox name="karmaonattackvis">
+				<invisible />
+				<bounds>198,52,25,25</bounds>
+			</checkbox>
+			<checkbox name="karmaonattack">
+				<invisible />
+				<disabled />
+				<checked />
+				<bounds>198,52,25,25</bounds>
+				<script>
+					function onValueChanged()
+						window.karmaonattackvis.setState(window.karmaonattack.isVisible());
+					end
+				</script>
+			</checkbox>
+
+			<stringcontrol name="attacksteplabel">
+				<bounds>193,70,75,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>ATTACK</static>
+			</stringcontrol>
+
+			<stringfield name="attackkarmaclass" source="attackkarmaclass">
+				<invisible />
+				<bounds>193,70,75,20</bounds>
+			</stringfield>
+
+			<modifiernumber name="attackstep" source="attackstep.total">
+				<bounds>199,80,25,25</bounds>
+
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetnumber</font>
+				<readonly />
+				<source>
+					<name>attackbonusonestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonustwostep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonusthreestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonusfourstep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonusfivestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonussixstep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>attackbonussevenstep</name>
+					<op>+</op>
+				</source>
+				<modifierfield>attackstep.total.temp</modifierfield>
+				<modifierloc>bottomright</modifierloc>
+				<script>
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						dragdata.setDescription(window.name.getValue() .. " (Attack Step " .. getValue() .. ")" );
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+
+						attackkarmastep = 0;
+						karmaaddedtext = "";
+
+						if window.karmaonattack.isVisible() and window.karmaonattack.getState() then
+							--[[print("need to grab karma die for" .. window.attackkarmaclass.getValue());]]
+							local node = window.getDatabaseNode().getParent().getParent();
+							local source = node.getChild("discipline");
+							local templist = source.getChildren();
+							found = 0;
+							attackkarmastep = 0;
+							for i in pairs(templist) do
+								if templist[i].getChild("name") then
+									local discname = templist[i].getChild("name").getValue();
+									if discname == window.attackkarmaclass.getValue() and found == 0 and templist[i].getChild("curr").getValue() &gt;= 1 then
+										found = 1;
+										attackkarmastep = templist[i].getChild("kstep").getValue();
+										templist[i].getChild("curr").setValue(templist[i].getChild("curr").getValue() - 1);
+										karmaaddedtext = " + Step " .. attackkarmastep .. " " .. window.attackkarmaclass.getValue() .. " Karma";
+										
+									end
+								end
+							end
+							if attackkarmastep &gt;= 1 then
+								dicea = {};
+								dicea, mod = Step.getStepDice(attackkarmastep);
+								for k,v in pairs(dicea) do 
+									table.insert(dice, v) 
+								end
+							end
+						end
+						if window.strainonattack.getState() == true then
+							window.attackstrain.onDoubleClick();
+						end
+						ChatManager.control.throwDice("dice",dice, mod, window.name.getValue() .. " (Attack Step " .. getValue() .. karmaaddedtext .. ")");
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							setFrame("sheetfocus", 3, 3, 3, 3);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 3, 3, 3, 3);
+							end
+						end
+					end
+				</script>
+			</modifiernumber>
+			<stringcontrol name="steplabel">
+				<bounds>200,103,75,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>STEP</static>
+			</stringcontrol>
+<!--}}}-->
+
+<!--}}}-->
+
+<!--DAMAGE CALCS--><!--{{{-->
+			<genericcontrol name="damagestepframe">
+				<bounds>236,42,226,156</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="damagesteplabel">
+				<anchored>
+					<to>damagestepframe</to>
+					<position>insidetop</position>
+					<offset>-75,5</offset>
+				</anchored>
+				<font>sheetlabelsmallbold</font>
+				<static>Damage Step:</static>
+			</stringcontrol>
+			
+<!--damagebonusone--><!--{{{-->
+			<nonlabeledstring name="damagebonusonesourcename"><!--{{{-->
+				<!-- <bounds>20,55,140,20</bounds> -->
+				<bounds>246,55,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonusonestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
+							end	
+							if ret then
+								window.damagebonusonestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonusonestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonusonestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
+						end	
+						if ret then
+							window.damagebonusonestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusonestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonusonestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusonestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusonestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusonestep", getValue());
+						end	
+						if ret then
+							window.damagebonusonestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusonestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonusonestep"><!--{{{-->
+				<!--<bounds>165,53,25,20</bounds>-->
+				<bounds>391,53,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--damagebonustwo--><!--{{{-->
+			<nonlabeledstring name="damagebonustwosourcename"><!--{{{-->
+				<!--<bounds>20,75,140,20</bounds>-->
+				<bounds>246,75,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonustwostep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonustwostep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonustwostep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonustwostep", getValue());
+							end	
+							if ret then
+								window.damagebonustwostep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonustwostep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonustwostep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonustwostep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonustwostep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonustwostep", getValue());
+						end	
+						if ret then
+							window.damagebonustwostep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonustwostep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonustwostep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonustwostep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonustwostep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonustwostep", getValue());
+						end	
+						if ret then
+							window.damagebonustwostep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonustwostep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonustwostep"><!--{{{-->
+				<!--<bounds>165,73,25,20</bounds>-->
+				<bounds>391,73,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--damagebonusthree--><!--{{{-->
+			<nonlabeledstring name="damagebonusthreesourcename"><!--{{{-->
+				<!--<bounds>20,95,140,20</bounds> -->
+				<bounds>246,95,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonusthreestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonusthreestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonusthreestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonusthreestep", getValue());
+							end	
+							if ret then
+								window.damagebonusthreestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonusthreestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonusthreestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusthreestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusthreestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusthreestep", getValue());
+						end	
+						if ret then
+							window.damagebonusthreestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusthreestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonusthreestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusthreestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusthreestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusthreestep", getValue());
+						end	
+						if ret then
+							window.damagebonusthreestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusthreestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonusthreestep"><!--{{{-->
+				<!--<bounds>165,93,25,20</bounds>-->
+				<bounds>391,93,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--damagebonusfour--><!--{{{-->
+			<nonlabeledstring name="damagebonusfoursourcename"><!--{{{-->
+				<!--<bounds>20,95,140,20</bounds> -->
+				<bounds>246,115,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonusfourstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonusfourstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonusfourstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonusfourstep", getValue());
+							end	
+							if ret then
+								window.damagebonusfourstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonusfourstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonusfourstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusfourstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusfourstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusfourstep", getValue());
+						end	
+						if ret then
+							window.damagebonusfourstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusfourstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonusfourstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusfourstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusfourstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusfourstep", getValue());
+						end	
+						if ret then
+							window.damagebonusfourstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusfourstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonusfourstep"><!--{{{-->
+				<!--<bounds>165,93,25,20</bounds>-->
+				<bounds>391,113,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--damagebonusfive--><!--{{{-->
+			<nonlabeledstring name="damagebonusfivesourcename"><!--{{{-->
+				<!--<bounds>20,95,140,20</bounds> -->
+				<bounds>246,135,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonusfivestep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonusfivestep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonusfivestep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonusfivestep", getValue());
+							end	
+							if ret then
+								window.damagebonusfivestep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonusfivestep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonusfivestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusfivestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusfivestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusfivestep", getValue());
+						end	
+						if ret then
+							window.damagebonusfivestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusfivestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonusfivestep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonusfivestep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonusfivestep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonusfivestep", getValue());
+						end	
+						if ret then
+							window.damagebonusfivestep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonusfivestep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonusfivestep"><!--{{{-->
+				<!--<bounds>165,93,25,20</bounds>-->
+				<bounds>391,133,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--damagebonussix--><!--{{{-->
+			<nonlabeledstring name="damagebonussixsourcename"><!--{{{-->
+				<!--<bounds>20,95,140,20</bounds> -->
+				<bounds>246,155,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonussixstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonussixstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonussixstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonussixstep", getValue());
+							end	
+							if ret then
+								window.damagebonussixstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonussixstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonussixstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonussixstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonussixstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonussixstep", getValue());
+						end	
+						if ret then
+							window.damagebonussixstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonussixstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonussixstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonussixstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonussixstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonussixstep", getValue());
+						end	
+						if ret then
+							window.damagebonussixstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonussixstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonussixstep"><!--{{{-->
+				<!--<bounds>165,93,25,20</bounds>-->
+				<bounds>391,153,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+<!--damagebonusseven--><!--{{{-->
+			<nonlabeledstring name="damagebonussevensourcename"><!--{{{-->
+				<!--<bounds>20,95,140,20</bounds> -->
+				<bounds>246,175,140,20</bounds>
+				<tabtarget>
+					<prev>name</prev>
+					<next>attribute</next>
+				</tabtarget>
+				<empty>Damage Source</empty>
+				<script file="scripts/statmodifier.lua" />
+				<script>
+					localwidget = nil;
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "string" then
+							setValue(draginfo.getStringData());
+							ret = setStep("damagebonussevenstep");
+							if ret ~= true then
+								ret = grabTalentInfo("talents", "name", "damagebonussevenstep", getValue());
+							end
+							if ret ~= true then
+								ret = grabTalentInfo("skills", "name", "damagebonussevenstep", getValue());
+							end	
+							if ret ~= true then
+								ret = grabTalentInfo("spells", "name", "damagebonussevenstep", getValue());
+							end	
+							if ret then
+								window.damagebonussevenstep.setReadOnly(true);
+								localwidget.setVisible(true);
+							else
+								window.damagebonussevenstep.setReadOnly(false);
+								localwidget.setVisible(false);
+							end
+						end
+						return true;
+					end
+					function onInit()
+ 						localwidget = addBitmapWidget("indicator_linked");
+						localwidget.setPosition("left", -5, -3);
+						localwidget.setVisible(false);
+						ret = setStep("damagebonussevenstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonussevenstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonussevenstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonussevenstep", getValue());
+						end	
+						if ret then
+							window.damagebonussevenstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonussevenstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+					end
+					function onLoseFocus()
+						ret = setStep("damagebonussevenstep");
+						if ret ~= true then
+							ret = grabTalentInfo("talents", "name", "damagebonussevenstep", getValue());
+						end
+						if ret ~= true then
+							ret = grabTalentInfo("skills", "name", "damagebonussevenstep", getValue());
+						end	
+						if ret ~= true then
+							ret = grabTalentInfo("spells", "name", "damagebonussevenstep", getValue());
+						end	
+						if ret then
+							window.damagebonussevenstep.setReadOnly(true);
+							localwidget.setVisible(true);
+						else
+							window.damagebonussevenstep.setReadOnly(false);
+							localwidget.setVisible(false);
+						end
+						
+						super.onLoseFocus();
+					end
+				</script>
+			</nonlabeledstring><!--}}}-->
+
+			<numberfield name="damagebonussevenstep"><!--{{{-->
+				<!--<bounds>165,93,25,20</bounds>-->
+				<bounds>391,173,25,20</bounds>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,-1,0,1</offset>
+				</frame>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+						else
+							if hasFocus() == false then
+								setColor(nil);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+<!--}}}-->
+
+<!--DAMAGE STEP--><!--{{{-->
+			<stringcontrol name="karmaondamagelabel">
+				<!--<bounds>195,47,75,20</bounds>-->
+				<bounds>421,47,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Karma:</static>
+				<invisible />
+			</stringcontrol>
+			<checkbox name="karmaondamagevis">
+				<invisible />
+				<!--<bounds>198,52,25,25</bounds>-->
+				<bounds>424,52,25,25</bounds>
+			</checkbox>
+			<checkbox name="karmaondamage">
+				<invisible />
+				<disabled />
+				<checked />
+				<!--<bounds>198,52,25,25</bounds>-->
+				<bounds>424,53,25,25</bounds>
+				<script>
+					function onValueChanged()
+						window.karmaondamagevis.setState(window.karmaondamage.isVisible());
+					end
+				</script>
+			</checkbox>
+
+			<stringcontrol name="damagesteplabel">
+				<!--<bounds>193,70,75,20</bounds>-->
+				<bounds>417,70,75,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>DAMAGE</static>
+			</stringcontrol>
+
+			<stringfield name="damagekarmaclass" source="damagekarmaclass">
+				<invisible />
+				<bounds>193,70,75,20</bounds>
+			</stringfield>
+
+			<modifiernumber name="damagestep" source="damagestep.total">
+				<!--<bounds>199,80,25,25</bounds>-->
+				<bounds>425,80,25,25</bounds>
+
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetnumber</font>
+				<readonly />
+				<source>
+					<name>damagebonusonestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonustwostep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonusthreestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonusfourstep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonusfivestep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonussixstep</name>
+					<op>+</op>
+				</source>
+				<source>
+					<name>damagebonussevenstep</name>
+					<op>+</op>
+				</source>
+				<modifierfield>damagestep.total.temp</modifierfield>
+				<modifierloc>bottomright</modifierloc>
+				<script>
+					function onDrag(button,x,y,dragdata)
+						dragdata.setType("dice");
+						dragdata.setSlot(1);
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+						dragdata.setDieList(dice);
+						dragdata.setDescription(window.name.getValue() .. " (Damage Step " .. getValue() .. ")" );
+						dragdata.setNumberData(mod);
+						
+						return true;
+					end	
+					function onDoubleClick()
+						dice = {};
+						mod = 0;
+						dice, mod = Step.getStepDice(getValue());
+
+						damagekarmastep = 0;
+						karmaaddedtext = "";
+
+						if window.karmaondamage.isVisible() and window.karmaondamage.getState() then
+							--[[print("need to grab karma die for" .. window.damagekarmaclass.getValue());]]
+							local node = window.getDatabaseNode().getParent().getParent();
+							local source = node.getChild("discipline");
+							local templist = source.getChildren();
+							found = 0;
+							damagekarmastep = 0;
+							for i in pairs(templist) do
+								if templist[i].getChild("name") then
+									local discname = templist[i].getChild("name").getValue();
+									if discname == window.damagekarmaclass.getValue() and found == 0 and templist[i].getChild("curr").getValue() &gt;= 1 then
+										found = 1;
+										damagekarmastep = templist[i].getChild("kstep").getValue();
+										templist[i].getChild("curr").setValue(templist[i].getChild("curr").getValue() - 1);
+										karmaaddedtext = " + Step " .. damagekarmastep .. " " .. window.damagekarmaclass.getValue() .. " Karma";
+										
+									end
+								end
+							end
+							if damagekarmastep &gt;= 1 then
+								dicea = {};
+								dicea, mod = Step.getStepDice(damagekarmastep);
+								for k,v in pairs(dicea) do 
+									table.insert(dice, v) 
+								end
+							end
+						end
+						if window.strainondamage.getState() == true then
+							window.damagestrain.onDoubleClick();
+						end
+						ChatManager.control.throwDice("dice",dice, mod, window.name.getValue() .. " (Damage Step " .. getValue() .. karmaaddedtext .. ")");
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF228822");
+							setFrame("sheetfocus", 3, 3, 3, 3);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 3, 3, 3, 3);
+							end
+						end
+					end
+				</script>
+			</modifiernumber>
+			<stringcontrol name="steplabel">
+				<!--<bounds>200,103,75,20</bounds>-->
+				<bounds>426,103,75,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>STEP</static>
+			</stringcontrol>
+<!--}}}-->
+
+
+<!--}}}-->
+
+<!--VS DEF--><!--{{{-->
+			<genericcontrol name="defenseframe">
+				<bounds>10,194,160,40</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="deflabel">
+				<anchored>
+					<to>defenseframe</to>
+					<position>insidetop</position>
+					<offset>-45,5</offset>
+				</anchored>
+				<font>sheetlabelsmallbold</font>
+				<static>vs Defense:</static>
+			</stringcontrol>
+
+
+			<stringcontrol name="phydeflabel">
+				<bounds>17,212,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Physical:</static>
+			</stringcontrol>
+			<checkbox name="physicaldefense">
+				<bounds>50,205,25,25</bounds>
+			</checkbox>
+			
+			<stringcontrol name="spelldeflabel">
+				<bounds>75,212,25,25</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Spell:</static>
+			</stringcontrol>
+			<checkbox name="spelldefense">
+				<bounds>98,205,25,25</bounds>
+			</checkbox>
+			
+			<stringcontrol name="socialdeflabel">
+				<bounds>120,212,25,25</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Social:</static>
+			</stringcontrol>
+			<checkbox name="socialdefense">
+				<bounds>143,205,25,25</bounds>
+			</checkbox>
+<!--}}}-->
+
+<!--VS ARMOR--><!--{{{-->
+			<genericcontrol name="armorframe">
+				<bounds>10,234,160,40</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="armorlabel">
+				<anchored>
+					<to>armorframe</to>
+					<position>insidetop</position>
+					<offset>-45,5</offset>
+				</anchored>
+				<font>sheetlabelsmallbold</font>
+				<static>vs Armor:</static>
+			</stringcontrol>
+
+
+			<stringcontrol name="phyarmorlabel">
+				<bounds>17,252,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Physical:</static>
+			</stringcontrol>
+			<checkbox name="physicalarmor">
+				<bounds>50,245,25,25</bounds>
+			</checkbox>
+			
+			<stringcontrol name="mysticarmorlabel">
+				<bounds>75,252,30,25</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Mystic:</static>
+			</stringcontrol>
+			<checkbox name="mysticarmor">
+				<bounds>103,245,25,25</bounds>
+			</checkbox>
+			
+<!--}}}-->
+
+<!-- Strain --> <!--{{{-->
+			<genericcontrol name="defenseframe">
+				<bounds>167,194,69,80</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+			<stringcontrol name="strainlabel">
+				<bounds>184,199,40,20</bounds>
+				<font>sheetlabelinline</font>
+				<static>STRAIN</static>
+			</stringcontrol>
+
+			<numberfield name="attackstrain"><!--{{{-->
+				<bounds>175,209,25,25</bounds>
+				<tabtarget>
+					<prev>rank</prev>
+					<next>disciplinename</next>
+				</tabtarget>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<font>sheetnumber</font>
+				<tooltip>attackstrain</tooltip>
+				<script>
+					function onDoubleClick()
+						if User.isHost() then
+							userguy = GmIdentityManager.getCurrent();
+						else
+							userguy = User.getIdentityLabel();
+						end
+						window.getDatabaseNode().getParent().getParent().getChild("health.damage").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.damage").getValue() + getValue());
+						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Attack roll Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+
+						if getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.woundthreshold.total").getValue() then
+							window.getDatabaseNode().getParent().getParent().getChild("health.wounds").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.wounds").getValue() + 1);
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Attack Roll Strain Wound [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						end
+						if window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.death.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						elseif window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.unconscious.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						end
+							
+					end
+					function onGainFocus()
+						setColor("#FF990099");
+						setFrame("sheetfocus", 3, 3, 3, 3);
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+						setFrame("modifier", 3, 3, 3, 3);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF882222");
+							setFrame("sheetfocus", 3, 3, 3, 3);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 3, 3, 3, 3);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+
+			<numberfield name="damagestrain"><!--{{{-->
+				<bounds>203,209,25,25</bounds>
+				<tabtarget>
+					<prev>rank</prev>
+					<next>disciplinename</next>
+				</tabtarget>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>3,3,3,3</offset>
+				</keyeditframe>
+				<font>sheetnumber</font>
+				<tooltip>damagestrain</tooltip>
+				<script>
+					function onDoubleClick()
+						if User.isHost() then
+							userguy = GmIdentityManager.getCurrent();
+						else
+							userguy = User.getIdentityLabel();
+						end
+						window.getDatabaseNode().getParent().getParent().getChild("health.damage").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.damage").getValue() + getValue());
+						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Damage roll Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+
+						if getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.woundthreshold.total").getValue() then
+							window.getDatabaseNode().getParent().getParent().getChild("health.wounds").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.wounds").getValue() + 1);
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Damage roll Strain Wound [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						end
+						if window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.death.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						elseif window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.unconscious.total").getValue() then
+							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
+						end
+							
+					end
+					function onGainFocus()
+						setColor("#FF990099");
+						setFrame("sheetfocus", 3, 3, 3, 3);
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+						setFrame("modifier", 3, 3, 3, 3);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF882222");
+							setFrame("sheetfocus", 3, 3, 3, 3);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 3, 3, 3, 3);
+							end
+						end
+					end
+				</script>
+			</numberfield><!--}}}-->
+
+			<stringcontrol name="strainonattacklabel"><!--{{{-->
+				<bounds>181,237,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Attack:</static>
+			</stringcontrol>
+			<checkbox name="strainonattack">
+				<bounds>210,230,25,25</bounds>
+				<script>
+					function onInit()
+						super.onInit();
+						if window.strainonattack.getState() == true then
+							window.attackstrain.setVisible(true);
+						else
+							window.attackstrain.setVisible(false);
+						end
+					end
+					function onClickDown(button, x, y)
+						setState(not getState());
+						if window.strainonattack.getState() == true then
+							window.attackstrain.setVisible(true);
+						else
+							window.attackstrain.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox><!--}}}-->
+			
+			<stringcontrol name="strainondamagelabel"><!--{{{-->
+				<bounds>175,252,75,25</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Damage:</static>
+			</stringcontrol>
+			<checkbox name="strainondamage">
+				<bounds>210,245,25,25</bounds>
+				<script>
+					function onInit()
+						super.onInit();
+						if window.strainondamage.getState() == true then
+							window.damagestrain.setVisible(true);
+						else
+							window.damagestrain.setVisible(false);
+						end
+					end
+					function onClickDown(button, x, y)
+						setState(not getState());
+						if window.strainondamage.getState() == true then
+							window.damagestrain.setVisible(true);
+						else
+							window.damagestrain.setVisible(false);
+						end
+					end
+				</script>
+			</checkbox><!--}}}-->
+<!--}}}-->
+
+<!-- Range and Ammo --><!--{{{-->
+			<genericcontrol name="rangeammoframe">
+				<!--<bounds>10,274,226,60</bounds>-->
+				<bounds>236,194,226,80</bounds>
+				<frame>
+					<name>modifier</name>
+				</frame>
+			</genericcontrol>
+
+<!-- Range --><!--{{{-->
+			<stringcontrol name="rangelabel">
+				<!--<bounds>15,282,75,20</bounds>-->
+				<bounds>241,202,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Range:</static>
+			</stringcontrol>
+
+			<stringfield name="range">
+				<!--<bounds>50,282,177,10</bounds>-->
+				<bounds>276,202,177,10</bounds>
+				<frame>
+					<name>textline</name>
+					<offset>1,5,1,1</offset>
+				</frame>
+				<font>sheetlabelsmall</font>
+				<tabtarget>
+					<prev>reattune</prev>
+					<next>duration</next>
+				</tabtarget>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+				</script>
+				<empty>melee</empty>
+			</stringfield>
+<!--}}}-->
+<!--AMMO--><!--{{{-->
+			<numberfield name="maxammo"><!--{{{-->
+				<!--<bounds>60,300,25,20</bounds>-->
+				<bounds>286,230,25,20</bounds>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,5</offset>
+				</frame>
+				<font>sheetnumber</font>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<drophilight>
+						<name>sheetfocus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onGainFocus()
+						setColor("#FF990099");
+					end
+					
+					function onLoseFocus()
+						setColor(nil);
+					end
+					function onHover(state)
+						if state then
+							setColor("#FF990099");
+							setFrame("sheetfocus", 5, 5, 5, 5);
+						else
+							if hasFocus() == false then
+								setColor(nil);
+								setFrame("modifier", 5, 5, 5, 5);
+							end
+						end
+					end
+
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 70 then
+							setValue(70);
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>critrange</next>
+					<prev>rangeincrement</prev>
+				</tabtarget>
+			</numberfield><!--}}}-->
+			<stringcontrol>
+				<anchored>
+					<to>maxammo</to>
+					<position>lefthigh</position>
+					<offset>3,3</offset>
+				</anchored>
+				<font>sheetlabel</font>
+				<static>Ammo</static>
+			</stringcontrol>
+			
+			<genericcontrol name="ammocounter">
+				<!--<bounds>98,295,132,33</bounds>-->
+				<bounds>314,215,142,53</bounds>
+				<stateicons>
+					<on>indicator_checkon</on>
+					<off>indicator_checkoff</off>
+				</stateicons>
+				<spacing>
+					<horizontal>10</horizontal>
+					<vertical>10</vertical>
+				</spacing>
+				<slotcount>
+					<horizontal>14</horizontal>
+					<vertical>5</vertical>
+				</slotcount>
+				<fields>
+					<max>maxammo</max>
+					<count>ammo</count>
+				</fields>
+				<script file="scripts/charsheet_ammocounter.lua" />
+			</genericcontrol><!--}}}-->
+<!--}}}-->
+
+<!-- Description --><!--{{{-->
+			<stringcontrol name="descriptionlabel">
+				<!--<bounds>15,333,75,20</bounds>-->
+				<bounds>15,273,75,20</bounds>
+				<font>sheetlabel</font>
+				<static>Description:</static>
+			</stringcontrol>
+
+			
+			<genericcontrol name="frame">
+				<!--<bounds>5,327,235,174</bounds>-->
+				<bounds>5,267,460,120</bounds>
+			</genericcontrol>
+			
+			<stringfield name="description">
+				<tabtarget>
+					<prev>circle</prev>
+					<next>name</next>
+				</tabtarget>
+				<anchored>
+					<to>frame</to>
+					<position>over</position>
+					<offset>-14,-19</offset>
+				</anchored>
+				<multilinespacing>12</multilinespacing>
+				<font>chatfont</font>
+			</stringfield>
+<!--}}}-->
+
+<!--NOTES--><!--{{{-->
+			<stringcontrol name="scnoteslabel">
+				<!--<bounds>175,335,75,20</bounds>-->
+				<bounds>405,273,75,20</bounds>
+				<font>sheetlabelsmall</font>
+				<static>Notes:</static>
+			</stringcontrol>
+
+			<windowreferencefield name="attack_notes_shortcut">
+				<!--<bounds>192,333,40,20</bounds>-->
+				<bounds>425,271,40,20</bounds>
+				<icon>
+					<normal>button_openwindow</normal>
+					<empty>button_emptytarget</empty>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<allowdrop />
+			</windowreferencefield>
+<!--}}}-->
+
+			<closebutton_charsheet />
+			
+		</sheetdata>
+	</windowclass><!--}}}-->
+
+
+</root>
