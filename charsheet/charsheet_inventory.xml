@@ -166,7 +166,7 @@
 							local class, datasource = draginfo.getShortcutData();
 							local source = draginfo.getDatabaseNode();
 
-							if source and class == "refitemfull" then
+							if source and class == "refitemfull" or class == "item" then
 								local newentry = addCustomItem(source);
 							end
 					

@@ -8,7 +8,8 @@
     
 	<includefile source="charsheet/charsheet.xml" />
     <includefile source="adventure_npcs.xml"/>
-    <includefile source="adventure_items.xml"/>
+    
+    <includefile source="campaign/record_item.xml"/>
     <includefile source="ct/ct_host.xml"/>
     <includefile source="ct/template_ct.xml"/>
 	<includefile source="ref/reference.xml" />

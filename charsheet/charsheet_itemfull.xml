@@ -13,7 +13,7 @@
 		<tooltip field="name" />
 		<sheetdata>
             <sub_record_header name="header">
-                <class>item_header</class>
+                <class>itemfull_header</class>
             </sub_record_header>            
 			<ref_contentframe/>
 
@@ -73,7 +73,7 @@
 		</sheetdata>
 	</windowclass>
 	
-	<windowclass name="item_header">
+	<windowclass name="itemfull_header">
 		<margins control="0,0,0,7" />
 		<sheetdata>
 			<link_record_header>
