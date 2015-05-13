@@ -419,7 +419,7 @@
 			<genericcontrol name="defenseframe">
 				<bounds>15,290,480,165</bounds>
 				<frame>
-					<name>sheetgroup</name>
+					<name>groupbox</name>
 				</frame>
 			</genericcontrol>
 			
