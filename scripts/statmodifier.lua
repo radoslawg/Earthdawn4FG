@@ -41,7 +41,9 @@ function setStep(something)
 		return true;
 	else
 		if something == "attribute" then
+            window.attribute.clearSources();
 			window.attribute.setReadOnly(false);
+            window.attribute.setValue(0);
 		end
 		return false;
 	end

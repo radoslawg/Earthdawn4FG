@@ -8,6 +8,41 @@
 		</sizelimits>
 		<sheetdata>
 			
+                <stringfield name="attribname">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>25</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>105</width>
+					</size>
+				</anchored>
+                <invisible/>
+                <script file="scripts/statmodifier.lua" />
+           
+            </stringfield>
+            
+			<step_linked name="attribute">
+				<anchored to="attribname" position="belowleft" width="26" offset="20, 12"/>
+                <source/>
+				<tabtarget>
+					<prev>attribname</prev>
+					<next>rank</next>
+				</tabtarget>
+                <invisible/>
+                <read_only/>
+			</step_linked>       
+
+            <step_field name="damagestep.weapon">
+				<anchored to="attribname" position="rightlow" offset="30,0" width="25"/>
+                <invisible/>
+			</step_field>
+            
 			<textlistitemvalue name="name">
 				<anchored>
 					<left>
@@ -37,24 +72,6 @@
 					end
 				</script>
 			</textlistitemvalue>
-			<stringcontrol name="karmaonattacklabel">
-				<bounds>0,0,0,0</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Karma:</static>
-				<invisible />
-			</stringcontrol>
-			<checkbox name="karmaonattack">
-				<invisible />
-				<bounds>0,0,0,0</bounds>
-			</checkbox>
-			<checkbox name="karmaonattackvis">
-				<invisible />
-				<bounds>0,0,0,0</bounds>
-			</checkbox>
-			<stringfield name="attackkarmaclass" source="attackkarmaclass">
-				<invisible />
-				<bounds>0,0,0,0</bounds>
-			</stringfield>
 			<step_linked_modifier_roll name="attackstep" source="attackstep.total">
 				<readonly />
 				<anchored>
@@ -70,10 +87,6 @@
 						<width>20</width>
 					</size>
 				</anchored>
-				<source>
-					<name>attackbonusonestep</name>
-					<op>+</op>
-				</source>
 			</step_linked_modifier_roll>
 			<stringcontrol name="karmaondamagelabel">
 				<bounds>0,0,0,0</bounds>
@@ -115,9 +128,13 @@
 				<font>sheetnumber</font>
 				<readonly />
 				<source>
-					<name>damagebonusonestep</name>
+					<name>damagestep.weapon</name>
 					<op>+</op>
 				</source>
+				<source>
+					<name>attribute</name>
+					<op>+</op>
+				</source>                
 			</step_linked_modifier_roll>
 
 			<checkbox name="physicaldefense">

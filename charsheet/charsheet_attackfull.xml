@@ -3,11 +3,11 @@
  	<windowclass name="attackfull">
 		<frame>recordsheet</frame>
 		<placement>
-			<size height="380" width="500" />
+			<size height="470" width="425" />
 		</placement>
 		<sizelimits>
-			<minimum width="500" height="380" />
-			<maximum width="500" height="380" />
+			<minimum height="470" width="425" />
+			<maximum height="470" width="425" />
 		</sizelimits>        
 		<minimize>minimized_item</minimize>
 		<tooltip field="name" />
@@ -18,7 +18,7 @@
 			<ref_contentframe/>
 
             <genericcontrol name="attackframe">
-				<anchored to="contentframe" position="insidetopleft" width="160" height="80"/>
+				<anchored to="contentframe" position="insidetopleft" width="160" height="130"/>
 				<frame>
 					<name>groupbox</name>
 				</frame>
@@ -36,19 +36,41 @@
 				<static>Attack Step:</static>
 			</stringcontrol>
 
-			<step_roll name="attackstep" source="attackstep.total">
+			<step_roll name="attackstep.total">
 				<anchored to="attacksteplabel" position="rightlow" offset="30,0" width="25"/>
 			</step_roll>
-
-			<stringcontrol name="damagesteplabel">
+			            
+			<stringcontrol name="damagesteplabel.weapon">
 				<anchored to="attacksteplabel" position="belowleft" offset="0, 10"/>
 				<font>sheetlabel</font>
 				<static>Damage Step:</static>
 			</stringcontrol>
 			
-			<step_roll name="damagestep" source="damagestep.total">
-				<anchored to="attackstep" position="belowleft" offset="0, 7" width="25" />
-			</step_roll>
+			<step_field name="damagestep.weapon">
+				<anchored to="attackstep.total" position="belowleft" offset="0, 7" width="25" />
+			</step_field>
+            
+			<labeledstring name="attribname">
+				<anchored to="damagesteplabel.weapon" position="belowleft" offset="0, 10" width="75"/>
+				<label>Add Attribute</label>
+			</labeledstring>
+
+            <step_field name="attribute">
+				<anchored to="damagestep.weapon" position="belowleft" offset="0, 7" width="25" />
+                <readonly/>
+			</step_field>
+            
+			<stringcontrol name="damagesteplabel.total">
+				<anchored to="attribname" position="belowleft" offset="0, 10" width="85"/>
+				<font>sheetlabel</font>
+				<static>Total Damage:</static>
+			</stringcontrol>
+
+			<step_roll name="damagestep.total">
+				<anchored to="attribute"  position="belowleft" offset="0, 7" width="25"/>
+                <readonly/>
+			</step_roll>            
+            
 
 			<genericcontrol name="defenseframe">
 				<anchored to="attackframe" position="righthigh" offset="15,0" width="183" height="50"/>
@@ -155,7 +177,7 @@
 			</step_field>
 
             <genericcontrol name="rangeammoframe">
-				<anchored to="armorframe" position="below" offset="0,0" height="90"/>
+				<anchored to="armorframe" position="below" offset="0,0" height="100"/>
 				<frame>
 					<name>groupbox</name>
 				</frame>
@@ -194,7 +216,7 @@
 						end
 					end
 				</script>
-			</step_field><!--}}}-->
+			</step_field>
 			
 			<genericcontrol name="ammocounter">
 				<anchored to="maxammolabel" position="insidetopleft" width="155" offset="0,13" height="53"/>
@@ -204,7 +226,7 @@
 				</stateicons>
 				<spacing>
 					<horizontal>8</horizontal>
-					<vertical>8</vertical>
+					<vertical>10</vertical>
 				</spacing>
 				<slotcount>
 					<horizontal>19</horizontal>
@@ -217,33 +239,15 @@
 				<script file="charsheet/scripts/char_ammocounter.lua" />
 			</genericcontrol>
 
-<!-- Description --><!--{{{-->
 			<stringcontrol name="descriptionlabel">
-				<!--<bounds>15,333,75,20</bounds>-->
-				<bounds>15,273,75,20</bounds>
-				<font>sheetlabel</font>
-				<static>Description:</static>
+				<anchored to="strainframe" position="belowleft" offset="0,10"/>
+				<font>sheettext</font>
+				<static>Description</static>
+				<center/>
 			</stringcontrol>
-
-			
-			<genericcontrol name="frame">
-				<!--<bounds>5,327,235,174</bounds>-->
-				<bounds>5,267,460,120</bounds>
-			</genericcontrol>
-			
-			<stringfield name="description">
-				<tabtarget>
-					<prev>circle</prev>
-					<next>name</next>
-				</tabtarget>
-				<anchored>
-					<to>frame</to>
-					<position>over</position>
-					<offset>-14,-19</offset>
-				</anchored>
-				<multilinespacing>12</multilinespacing>
-				<font>chatfont</font>
-			</stringfield>
+            
+			<record_description/>
+			<record_scrollbar_description/>
 			<closebutton_charsheet />
 			
 		</sheetdata>
