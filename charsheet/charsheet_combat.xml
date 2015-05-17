@@ -745,22 +745,9 @@
 				<font>titlefont</font>
 				<static>Initiative</static>
 			</stringcontrol>
-			<stepcontrol_mod_ns name="initstep" source="init.step.total">
-				<anchored>
-					<to>charframe</to>
-					<position>insidetopleft</position>
-					<offset>432,27</offset>
-					<size>
-						<height>25</height>
-						<width>25</width>
-					</size>
-				</anchored>
-				<frame>
-					<name>modifier</name>
-					<offset>5,5,5,5</offset>
-				</frame>
-				<font>sheetnumber</font>
-				<description>Initiative</description>
+			<step_linked_modifier_roll name="initstep" source="init.step.total">
+				<anchored to="charframe" position="insidetopleft" offset="420,27" size="25" width="25" />
+                <description>Initiative</description>
 				<modifierfield>init.step.temp</modifierfield>
 				<source>
 					<name>initmod.def.base</name>
@@ -770,36 +757,7 @@
 					<name>attributes.dexterity.step</name>
 					<op>+</op>
 				</source>
-				<script>
-					function onHover(state)
-						if state then
-							diestring = "";
-							dice = {};
-							mod = 0;
-							dice, mod = Step.getStepDice(getValue());
-							for i=1,table.maxn(dice) do
-								diestring = diestring .. dice[i] .. "+";
-							end
-							if mod &lt; 0 then
-								diestring = string.sub(diestring,1,string.len(diestring)-1) .. mod;
-							else
-								diestring = string.sub(diestring,1,string.len(diestring)-1);
-							end
-							dieWidget.setPosition("left", -20, 0);
-							dieWidget.setText(diestring);
-							dieWidget.setVisible(true);
-							setColor("#FF228822");
-							setFrame("sheetfocus", 5, 5, 5, 5);
-						else
-							if hasFocus() == false then
-								setColor(nil);
-								setFrame("modifier", 5, 5, 5, 5);
-							end
-							dieWidget.setVisible(false);
-						end
-					end
-				</script>
-			</stepcontrol_mod_ns><!--}}}-->
+			</step_linked_modifier_roll>
 			
 <!-- ARMOR -->					<!--{{{-->
 			<stringcontrol name="armorlabel">
