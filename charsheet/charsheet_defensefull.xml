@@ -1,580 +1,213 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="2.0">
  	<windowclass name="defensefull">
-		<frame>referencebox</frame>
+		<frame>recordsheet</frame>
 		<placement>
-			<size>
-				<height>360</height>
-				<width>250</width>
-			</size>
+			<size height="470" width="390" />
 		</placement>
-		<minimize>minimized_combat</minimize>
-		<tooltip>
-			<field>name</field>
-		</tooltip>
+		<sizelimits>
+			<minimum height="470" width="390" />
+			<maximum height="470" width="390" />
+		</sizelimits>        
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
 		<sheetdata>
-			<stringfield name="name">
-				<bounds>20,17,210,25</bounds>
-				<font>titlefont</font>
-				<tabtarget>
-					<prev>description</prev>
-					<next>count</next>
-				</tabtarget>
+            <sub_record_header name="header">
+                <class>defense_full_header</class>
+            </sub_record_header>  
+			<ref_contentframe/>
+
+            <genericcontrol name="defenseframe">
+				<anchored to="contentframe" position="insidetopleft" width="160" height="105"/>
 				<frame>
-					<name>sheetgroup</name>
-				<offset>10,7,3,-1</offset>
-				</frame>
-				<center />
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</stringfield>
-
-			<stringcontrol name="initmodlabel">
-				<bounds>16,53,45,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>Initiative</static>
-			</stringcontrol>
-
-			<numberfield name="initmodnum" source="initmodnum.base">
-				<bounds>15,36,35,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,-2,1,1</offset>
-				</frame>
-				<font>sheettext</font>
-				<tabtarget>
-					<prev>name</prev>
-					<next>valuesp</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-
-			<stringcontrol name="activelabel">
-				<bounds>85,44,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Active?:</static>
-			</stringcontrol>
-
-			<checkbox name="activebox">
-				<bounds>120,38,25,25</bounds>
-			</checkbox>
-
-			<stringcontrol name="scnoteslabel">
-				<bounds>175,46,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Notes:</static>
-			</stringcontrol>
-
-			<windowreferencefield name="defense_notes_shortcut">
-				<bounds>195,43,40,20</bounds>
-				<icon>
-					<normal>button_openwindow</normal>
-					<empty>button_emptytarget</empty>
-					<pressed>button_emptytarget</pressed>
-				</icon>
-				<allowdrop />
-			</windowreferencefield>
-
-
-<!--VS DEF--><!--{{{-->
-			<genericcontrol name="defenseframe">
-				<bounds>10,64,160,40</bounds>
-				<frame>
-					<name>modifier</name>
+					<name>groupbox</name>
 				</frame>
 			</genericcontrol>
-			<stringcontrol name="deflabel">
-				<anchored>
-					<to>defenseframe</to>
-					<position>insidetop</position>
-					<offset>-45,5</offset>
-				</anchored>
+			
+            <stringcontrol name="defenselabel">
+				<anchored to="defenseframe" position="insidetop" offset="-55,5" width="75"/>
 				<font>sheetlabelsmallbold</font>
-				<static>vs Defense:</static>
+				<static>Defense</static>
 			</stringcontrol>
 
-
-			<stringcontrol name="phydeflabel">
-				<bounds>17,82,75,20</bounds>
-				<font>sheetlabelsmall</font>
+			<stringcontrol name="physicalsteplabel">
+				<anchored to="defenseframe" position="insidetopleft" width="75" offset="15,22"/>
+				<font>sheetlabel</font>
 				<static>Physical:</static>
 			</stringcontrol>
-			<numberfield name="physicaldefensenum" source="physicaldefensenum.base">
-				<bounds>55,78,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-
+			<step_roll name="physicaldefensenum" source="physicaldefensenum.base">
+				<anchored to="physicalsteplabel" position="rightlow" offset="30,0" width="25"/>
+			</step_roll>			
 			
-			<stringcontrol name="spelldeflabel">
-				<bounds>75,82,25,25</bounds>
-				<font>sheetlabelsmall</font>
+			<stringcontrol name="spellsteplabel">
+				<anchored to="physicalsteplabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
 				<static>Spell:</static>
 			</stringcontrol>
-			<numberfield name="spelldefensenum" source="spelldefensenum.base">
-				<bounds>101,78,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
 			
-			<stringcontrol name="socialdeflabel">
-				<bounds>120,82,25,25</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Social:</static>
+			<step_field name="spelldefensenum" source="spelldefensenum.base">
+				<anchored to="physicaldefensenum" position="belowleft" offset="0, 7" width="25" />
+			</step_field>
+			
+			<stringcontrol name="socialsteplabel">
+				<anchored to="spellsteplabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
+				<static>Spell:</static>
 			</stringcontrol>
-			<numberfield name="socialdefensenum" source="socialdefensenum.base">
-				<bounds>148,78,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-<!--}}}-->
+			
+			<step_field name="socialdefensenum" source="socialdefensenum.base">
+				<anchored to="spelldefensenum" position="belowleft" offset="0, 7" width="25" />
+			</step_field>			
 
-<!--VS ARMOR--><!--{{{-->
-			<genericcontrol name="armorframe">
-				<bounds>10,104,160,40</bounds>
+<!-- HEALTH-->
+            <genericcontrol name="healthframe">
+				<anchored to="defenseframe" position="right" width="160"/>
 				<frame>
-					<name>modifier</name>
+					<name>groupbox</name>
 				</frame>
 			</genericcontrol>
-			<stringcontrol name="armorlabel">
-				<anchored>
-					<to>armorframe</to>
-					<position>insidetop</position>
-					<offset>-45,5</offset>
-				</anchored>
+			
+            <stringcontrol name="healthlabel">
+				<anchored to="healthframe" position="insidetop" offset="-60,5" width="75"/>
 				<font>sheetlabelsmallbold</font>
-				<static>vs Armor:</static>
+				<static>Health</static>
 			</stringcontrol>
-
-
-			<stringcontrol name="phyarmorlabel">
-				<bounds>17,122,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Physical:</static>
-			</stringcontrol>
-			<numberfield name="physicalarmornum" source="physicalarmornum.base">
-				<bounds>55,118,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-			
-			<stringcontrol name="mysticarmorlabel">
-				<bounds>75,122,30,25</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Mystic:</static>
-			</stringcontrol>
-			<numberfield name="mysticarmornum" source="mysticarmornum.base">
-				<bounds>108,118,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-			
-<!--}}}-->
-
-<!-- Strain --> <!--{{{-->
-			<genericcontrol name="defenseframe">
-				<bounds>167,64,69,80</bounds>
-				<frame>
-					<name>modifier</name>
-				</frame>
-			</genericcontrol>
-			<stringcontrol name="strainlabel">
-				<bounds>184,69,40,20</bounds>
-				<font>sheetlabelinline</font>
-				<static>STRAIN</static>
-			</stringcontrol>
-
-			<numberfield name="attackstrain"><!--{{{-->
-				<bounds>175,79,25,25</bounds>
-				<tabtarget>
-					<prev>rank</prev>
-					<next>disciplinename</next>
-				</tabtarget>
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<keyeditframe>
-					<name>sheetfocus</name>
-					<offset>3,3,3,3</offset>
-				</keyeditframe>
-				<font>sheetnumber</font>
-				<tooltip>attackstrain</tooltip>
-				<script>
-					function onDoubleClick()
-						if User.isHost() then
-							userguy = GmIdentityManager.getCurrent();
-						else
-							userguy = User.getIdentityLabel();
-						end
-						window.getDatabaseNode().getParent().getParent().getChild("health.damage").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.damage").getValue() + getValue());
-						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-
-						if getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.woundthreshold.total").getValue() then
-							window.getDatabaseNode().getParent().getParent().getChild("health.wounds").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.wounds").getValue() + 1);
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Wound [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						end
-						if window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.death.total").getValue() then
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						elseif window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.unconscious.total").getValue() then
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						end
-							
-					end
-					function onGainFocus()
-						setColor("#FF990099");
-						setFrame("sheetfocus", 3, 3, 3, 3);
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-						setFrame("modifier", 3, 3, 3, 3);
-					end
-					function onHover(state)
-						if state then
-							setColor("#FF882222");
-							setFrame("sheetfocus", 3, 3, 3, 3);
-						else
-							if hasFocus() == false then
-								setColor(nil);
-								setFrame("modifier", 3, 3, 3, 3);
-							end
-						end
-					end
-				</script>
-			</numberfield><!--}}}-->
-
-			<numberfield name="damagestrain"><!--{{{-->
-				<bounds>203,79,25,25</bounds>
-				<tabtarget>
-					<prev>rank</prev>
-					<next>disciplinename</next>
-				</tabtarget>
-				<frame>
-					<name>modifier</name>
-					<offset>3,3,3,3</offset>
-				</frame>
-				<keyeditframe>
-					<name>sheetfocus</name>
-					<offset>3,3,3,3</offset>
-				</keyeditframe>
-				<font>sheetnumber</font>
-				<tooltip>damagestrain</tooltip>
-				<script>
-					function onDoubleClick()
-						if User.isHost() then
-							userguy = GmIdentityManager.getCurrent();
-						else
-							userguy = User.getIdentityLabel();
-						end
-						window.getDatabaseNode().getParent().getParent().getChild("health.damage").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.damage").getValue() + getValue());
-						ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Damage [" .. window.name.getValue() .. " ( " .. getValue() ..")] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-
-						if getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.woundthreshold.total").getValue() then
-							window.getDatabaseNode().getParent().getParent().getChild("health.wounds").setValue(window.getDatabaseNode().getParent().getParent().getChild("health.wounds").getValue() + 1);
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Strain Wound [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						end
-						if window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.death.total").getValue() then
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Death [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						elseif window.getDatabaseNode().getParent().getParent().getChild("totdamage").getValue() &gt;= window.getDatabaseNode().getParent().getParent().getChild("health.unconscious.total").getValue() then
-							ChatManager.control.deliverMessage({ font = "narratorfont", text = "[" .. userguy .. "]" .. ": Unconscious [" .. window.name.getValue() .. "] --> " .. window.getDatabaseNode().getParent().getParent().getChild("name").getValue(), mode = "emote"});
-						end
-							
-					end
-					function onGainFocus()
-						setColor("#FF990099");
-						setFrame("sheetfocus", 3, 3, 3, 3);
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-						setFrame("modifier", 3, 3, 3, 3);
-					end
-					function onHover(state)
-						if state then
-							setColor("#FF882222");
-							setFrame("sheetfocus", 3, 3, 3, 3);
-						else
-							if hasFocus() == false then
-								setColor(nil);
-								setFrame("modifier", 3, 3, 3, 3);
-							end
-						end
-					end
-				</script>
-			</numberfield><!--}}}-->
-
-			<stringcontrol name="strainonattacklabel">
-				<bounds>181,107,75,20</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Attack:</static>
-			</stringcontrol>
-			<checkbox name="strainonattack">
-				<bounds>210,100,25,25</bounds>
-				<script>
-					function onInit()
-						super.onInit();
-						if window.strainonattack.getState() == true then
-							window.attackstrain.setVisible(true);
-						else
-							window.attackstrain.setVisible(false);
-						end
-					end
-					function onClickDown(button, x, y)
-						setState(not getState());
-						if window.strainonattack.getState() == true then
-							window.attackstrain.setVisible(true);
-						else
-							window.attackstrain.setVisible(false);
-						end
-					end
-				</script>
-			</checkbox>
-			
-			<stringcontrol name="strainondamagelabel">
-				<bounds>175,122,75,25</bounds>
-				<font>sheetlabelsmall</font>
-				<static>Damage:</static>
-			</stringcontrol>
-			<checkbox name="strainondamage">
-				<bounds>210,115,25,25</bounds>
-				<script>
-					function onInit()
-						super.onInit();
-						if window.strainondamage.getState() == true then
-							window.damagestrain.setVisible(true);
-						else
-							window.damagestrain.setVisible(false);
-						end
-					end
-					function onClickDown(button, x, y)
-						setState(not getState());
-						if window.strainondamage.getState() == true then
-							window.damagestrain.setVisible(true);
-						else
-							window.damagestrain.setVisible(false);
-						end
-					end
-				</script>
-			</checkbox>
-<!--}}}-->
-
-<!--VS HEALTH--><!--{{{-->
-			<genericcontrol name="healthframe">
-				<bounds>10,145,-14,40</bounds>
-				<frame>
-					<name>modifier</name>
-				</frame>
-			</genericcontrol>
-			<stringcontrol name="healthlabel">
-				<anchored>
-					<to>healthframe</to>
-					<position>insidetop</position>
-					<offset>-85,5</offset>
-				</anchored>
-				<font>sheetlabelsmallbold</font>
-				<static>vs Health:</static>
-			</stringcontrol>
-
 
 			<stringcontrol name="wndthreshlabel">
-				<bounds>17,163,75,20</bounds>
-				<font>sheetlabelsmall</font>
+				<anchored to="healthframe" position="insidetopleft" width="75" offset="15,22"/>
+				<font>sheetlabel</font>
 				<static>Wnd Thr:</static>
 			</stringcontrol>
-			<numberfield name="wndthreshnum" source="wndthreshnum.base">
-				<bounds>63,159,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
+			<step_field name="wndthreshnum" source="wndthreshnum.base">
+				<anchored to="wndthreshlabel" position="rightlow" offset="30,0" width="25"/>
+			</step_field>			
 
-			
 			<stringcontrol name="unconlabel">
-				<bounds>85,163,75,25</bounds>
-				<font>sheetlabelsmall</font>
+				<anchored to="wndthreshlabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
 				<static>Unconscious:</static>
 			</stringcontrol>
-			<numberfield name="unconnum" source="unconnum.base">
-				<bounds>145,159,15,20</bounds>
-				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
-				</frame>
-				<font>sheetlabelsmall</font>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-			
+			<step_field name="unconnum" source="unconnum.base">
+				<anchored to="wndthreshnum" position="belowleft" offset="0, 7" width="25" />
+			</step_field>
+
 			<stringcontrol name="deathlabel">
-				<bounds>170,163,35,25</bounds>
-				<font>sheetlabelsmall</font>
+				<anchored to="unconlabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
 				<static>Death:</static>
 			</stringcontrol>
-			<numberfield name="deathnum" source="deathnum.base">
-				<bounds>203,159,15,20</bounds>
+			<step_field name="deathnum" source="deathnum.base">
+				<anchored to="unconnum" position="belowleft" offset="0, 7" width="25" />
+			</step_field>
+
+<!-- Strain -->
+            <genericcontrol name="strainframe">
+				<anchored to="defenseframe" position="below" offset="0,0" height="80"/>
 				<frame>
-					<name>textline</name>
-					<offset>1,1,1,1</offset>
+					<name>groupbox</name>
 				</frame>
-				<font>sheetlabelsmall</font>
-				<tabtarget>
-					<prev>circle</prev>
-					<next>weavethread</next>
-				</tabtarget>
-				<script>
-					function onGainFocus()
-						setColor("#FF990099");
-					end
-					
-					function onLoseFocus()
-						setColor(nil);
-					end
-				</script>
-			</numberfield>
-<!--}}}-->
+			</genericcontrol>            
 
-
-
-			<stringcontrol name="descriptionlabel">
-				<bounds>15,185,75,20</bounds>
+            <stringcontrol name="strainlabel">
+				<anchored to="strainframe" position="insidetop" offset="-50,5"/>
+				<font>sheetlabelsmallbold</font>
+				<static>Strain on</static>
+			</stringcontrol>
+            
+            <stringcontrol name="attackstrainlabel">
+				<anchored to="strainframe" position="insidetopleft" width="75" offset="15,22"/>
 				<font>sheetlabel</font>
-				<static>Description:</static>
+				<static>Attack:</static>
 			</stringcontrol>
 
-			<genericcontrol name="frame">
-				<bounds>5,180,235,180</bounds>
+			<step_field name="attackstrain">
+				<anchored to="attackstrainlabel" position="rightlow" offset="30,0" width="25" />
+			</step_field>
+
+			<stringcontrol name="damagestrainlabel">
+				<anchored to="attackstrainlabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
+				<static>Damage:</static>
+			</stringcontrol>
+			
+            <step_field name="damagestrain">
+				<anchored to="attackstrain" position="belowleft" offset="0, 7" width="25" />
+			</step_field>
+
+<!-- Armor Frame -->			
+			
+            <genericcontrol name="armorframe">
+				<anchored to="strainframe" position="right" width="160"/>
+				<frame>
+					<name>groupbox</name>
+				</frame>
 			</genericcontrol>
 			
-			<stringfield name="description">
-				<anchored>
-					<to>frame</to>
-					<position>over</position>
-					<offset>-14,-19</offset>
-				</anchored>
-				<multilinespacing>12</multilinespacing>
-				<font>chatfont</font>
-				<tabtarget>
-					<prev>totalweight</prev>
-					<next>name</next>
-				</tabtarget>
-			</stringfield>
+			<stringcontrol name="armorlabel">
+				<anchored to="armorframe" position="insidetop" offset="-55,5" />
+				<font>sheetlabelsmallbold</font>
+				<static>Armor</static>
+			</stringcontrol>
+            
+			<stringcontrol name="phyarmorlabel">
+				<anchored to="armorframe" position="insidetopleft" width="75" offset="15,22"/>
+				<font>sheetlabel</font>
+				<static>Physical:</static>
+			</stringcontrol>
+
+			<step_field name="physicalarmornum" source="physicalarmornum.base">
+				<anchored to="phyarmorlabel" position="rightlow" offset="30,0" width="25" />
+			</step_field>
+			
+			<stringcontrol name="mysticarmorlabel">
+				<anchored to="phyarmorlabel" position="belowleft" offset="0, 10"/>
+				<font>sheetlabel</font>
+				<static>Mystic:</static>
+			</stringcontrol>
+			
+            <step_field name="mysticarmornum" source="mysticarmornum.base">
+				<anchored to="physicalarmornum" position="belowleft" offset="0, 7" width="25" />
+			</step_field>			
+
+<!-- Initiative -->			
+			<stringcontrol name="initlabel">
+				<anchored to="armorframe" position="belowleft" offset="10, 10"/>
+				<font>sheetlabel</font>
+				<static>Initiative mod:</static>
+			</stringcontrol>
+
+			<step_field name="initmodnum" source="initmodnum.base">
+				<anchored to="initlabel" position="rightlow" offset="20,0" width="25" />
+			</step_field>
+
+<!-- Description -->
+			<stringcontrol name="descriptionlabel">
+				<anchored to="strainframe" position="belowleft" offset="0,20"/>
+				<font>sheettext</font>
+				<static>Description</static>
+				<center/>
+			</stringcontrol>
+            
+			<record_description/>
+			<record_scrollbar_description/>
 			<closebutton_charsheet />
 			
 		</sheetdata>
 	</windowclass><!--}}}-->
 
+	<windowclass name="defense_full_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<anchor_record_header_right />
+
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="5" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
 </root>
