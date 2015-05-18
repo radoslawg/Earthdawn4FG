@@ -171,7 +171,7 @@ function linkPCFields(src)--[[{{{]]
 	if src then
 		name.setLink(src.createChild("name", "string"), true);
 		wounds.setLink(src.createChild("health.wounds", "number"));
-		wounds.setReadOnly(true);
+--		wounds.setReadOnly(true);
 		damagetaken.setLink(src.createChild("health.damage", "number"));
 		blooddamage.setLink(src.createChild("health.bmdamage.base", "number"));
 		--totaldamage.setLink(src.createChild("totdamage", "number"));
