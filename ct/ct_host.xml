@@ -42,15 +42,19 @@
 				<static textres="ct_label_name" />
 				<center />
 			</label_ct>
-            <label_ct>
-				<anchored to="headeranchor" position="insidetopright" offset="50,0" width="40" />
-                <static>PA</static>
-            </label_ct>
 			<label_ct name="label_init">
-				<anchored to="headeranchor" position="insidetopright" offset="113,0" width="40" />
+				<anchored to="headeranchor" position="insidetopright" offset="235,0" width="40" />
 				<static textres="ct_label_init" />
 				<center />
 			</label_ct>
+            <label_ct>
+				<anchored to="headeranchor" position="insidetopright" offset="190,0" width="40" />
+                <static>Dmg</static>
+            </label_ct>		
+			<label_ct>
+				<anchored to="headeranchor" position="insidetopright" offset="150,0" width="40" />
+                <static>Wnds</static>
+            </label_ct>	
 			<frame_ctbox_host_header_toggles />
 			<buttoncontrol name="button_global_active">
 				<anchored to="header_toggles" position="insidetopleft" offset="10,8" width="20" height="20" />
