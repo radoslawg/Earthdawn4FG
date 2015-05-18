@@ -275,25 +275,6 @@
 				</anchored>
 				<hideonvalue>0</hideonvalue>
 			</ctnumberfield>
-			<ctnumberfield name="damagetaken"><!--{{{-->
-				<invisible />
-				<bounds>0,0,1,1</bounds>
-				<script>
-				        function onValueChanged()
-								super.onValueChanged();
-				                window.onWoundsChanged();
-				        end
-				</script>
-			</ctnumberfield><!--}}}-->
-			<ctnumberfield name="blooddamage"><!--{{{-->
-				<invisible />
-				<bounds>0,0,1,1</bounds>
-				<script>
-				        function onValueChanged()
-				                window.onWoundsChanged();
-				        end
-				</script>
-			</ctnumberfield><!--}}}-->
             
             <number_ct_crosslink name="totaldamage">
 				<anchored to="rightanchor" width="30" height="20">
@@ -388,10 +369,40 @@
 				</script>
 			</number_ct>
 			
-			<label name="initlabel"><!--{{{-->
+			<label name="initlabel"><!--{{{-->	
 				<anchored to="init" position="lefthigh" offset="10,0"/>
 				<static>Init</static>
 			</label>
+			
+<!--			<label name="damagelabel">
+				<anchored to="init" position="right" offset="10, 0" width="50"/>
+				<static>Damage</static>
+			</label>			-->
+			
+			<ctnumberfield name="damagetaken"><!--{{{-->
+				<bounds>2,2,20,20</bounds>
+				<script>
+				        function onValueChanged()
+								super.onValueChanged();
+				                window.onWoundsChanged();
+				        end
+				</script>
+				<invisible/>
+			</ctnumberfield>
+
+<!--			<label name="blooddamagelabel">
+				<anchored to="damagetaken" position="right" offset="10, 0" width="90"/>
+				<static>Blood Damage</static>
+			</label>			-->
+			<ctnumberfield name="blooddamage"><!--{{{-->
+				<bounds>2,2,20,20</bounds>
+				<script>
+				        function onValueChanged()
+				                window.onWoundsChanged();
+				        end
+				</script>
+				<invisible/>
+			</ctnumberfield>
 
 
 			<frame_ctsub name="frame_active">

@@ -174,7 +174,9 @@ function linkPCFields(src)--[[{{{]]
 --		wounds.setReadOnly(true);
 		damagetaken.setLink(src.createChild("health.damage", "number"));
 		blooddamage.setLink(src.createChild("health.bmdamage.base", "number"));
+		totaldamage.setValue(damagetaken.getValue() + blooddamage.getValue());
 		--totaldamage.setLink(src.createChild("totdamage", "number"));
+		--totaldamage.setReadOnly(true);
 		init.setLink(src.createChild("init.step.total", "number"), true);
 		init.setReadOnly(true);
         
@@ -261,6 +263,8 @@ function setActiveVisible(v)--[[{{{]]
 	--numattackslabel.setVisible(v);
 	init.setVisible(v);
 	initlabel.setVisible(v);
+	damagetaken.setVisible(v);
+	blooddamage.setVisible(v);
 	--attacks.setVisible(v);
 	--atklabel.setVisible(v);
 end--[[}}}]]
