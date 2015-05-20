@@ -17,7 +17,7 @@
 	
 	<script name="Step" file="scripts/step_action_lookup.lua" />
 	<script name="Lookup" file="scripts/lookup.lua" />
-	<script name="ActionStep" file="actionsmanager/manager_action_step.lua" />
+	<script name="ActionStep" file="scripts/manager_action_step.lua" />
 	<script name="GameSystem" file="scripts/manager_gamesystem.lua" />	
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
 </root>
