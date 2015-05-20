@@ -1,10 +1,7 @@
--- 
--- Please see the license.html file included with this distribution for 
--- attribution and copyright information.
---
 
 function onInit()
 	ActionsManager.registerResultHandler("step", onResult);
+	ActionsManager.registerModHandler("step", modRoll);
 end
 
 function performSRoll(draginfo, rActor, nodeWin, skillType)
@@ -29,7 +26,9 @@ end
 function getRoll(rActor, skillType, sSkillName, nSkillMod, sSkillStat, nSkillTemp, nSkillTarget, bSecretRoll, nStrain)
 	local rRoll = {};
 	rRoll.sType = "step";
-	rRoll.aDice, rRoll.nMod = Step.getStepDice(nSkillTemp);
+	local sStackDesc, nStackMod = ModifierStack.getStack(true);
+	ModifierStack.reset();
+	rRoll.aDice, rRoll.nMod = Step.getStepDice(nSkillTemp + nStackMod);	
     rRoll.sDesc = "[" .. StringManager.capitalize(skillType);
 	if sSkillName then
 		rRoll.sDesc = rRoll.sDesc .. ": " .. sSkillName .. "]";
@@ -111,4 +110,8 @@ function onResult(rSource, rTarget, rRoll)
 	local nTotal = ActionsManager.total(rRoll);
 
 	Comm.deliverChatMessage(rMessage);
+end
+
+
+function modRoll(rSource, rTarget, rRoll)	
 end
