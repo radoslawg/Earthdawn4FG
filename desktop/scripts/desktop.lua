@@ -24,9 +24,9 @@ end
 function registerPublicNodes()
 	if User.isHost() then
 		DB.createNode("options").setPublic(true);
-		DB.createNode("partysheet").setPublic(true);
+		DB.createNode("partysheet").setPublic(false);
 		DB.createNode("calendar").setPublic(true);
-		DB.createNode("combattracker").setPublic(false);
+		DB.createNode("combattracker").setPublic(true);
 		DB.createNode("modifiers").setPublic(true);
 		DB.createNode("effects").setPublic(true);
 	end
@@ -64,7 +64,7 @@ function onInit()
 --		DesktopManager.registerStackShortcut2("button_partysheet", "button_partysheet_down", "sidebar_tooltip_ps", "partysheet_client", "partysheet");
 
 		-- DesktopManager.registerStackShortcut2("button_tables", "button_tables_down", "sidebar_tooltip_tables", "tablelist", "tables");
-		-- DesktopManager.registerStackShortcut2("button_calendar", "button_calendar_down", "sidebar_tooltip_calendar", "calendar", "calendar");
+		DesktopManager.registerStackShortcut2("button_calendar", "button_calendar_down", "sidebar_tooltip_calendar", "calendar", "calendar");
 
 		DesktopManager.registerStackShortcut2("button_color", "button_color_down", "sidebar_tooltip_colors", "pointerselection");
 		DesktopManager.registerStackShortcut2("button_options", "button_options_down", "sidebar_tooltip_options", "options");

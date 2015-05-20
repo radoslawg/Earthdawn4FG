@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <root version="3.0" release="3.01" >
 	<importruleset source="CoreRPG" />
+	<script name="Desktop" file="desktop/scripts/desktop.lua" />
     
 	<includefile source="graphics/graphics.xml" />
 	<includefile source="gameelements.xml" />
@@ -11,16 +12,12 @@
     
     <includefile source="campaign/record_item.xml"/>
     <includefile source="ct/ct_host.xml"/>
-    <includefile source="ct/template_ct.xml"/>
+    <includefile source="ct/template_my_ct.xml"/>
 	<includefile source="ref/reference.xml" />
 	
-    <includefile source="desktop/desktop.xml" />
-
 	<script name="Step" file="scripts/step_action_lookup.lua" />
 	<script name="Lookup" file="scripts/lookup.lua" />
 	<script name="ActionStep" file="actionsmanager/manager_action_step.lua" />
 	<script name="GameSystem" file="scripts/manager_gamesystem.lua" />	
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
-    
-	<script name="Desktop" file="desktop/scripts/desktop.lua" />
 </root>

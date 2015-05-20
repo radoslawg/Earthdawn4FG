@@ -12,12 +12,9 @@ function onInit()
 	setSpacingVisible(false);
 	setEffectsVisible(false);
 
-	-- Acquire token reference, if any
 	linkToken();
-	
-	-- Set up the PC links
-    linkPCFields();
-	
+	onLinkChanged();
+	onFactionChanged();
 	onWoundsChanged();
 	
 	-- Register the deletion menu item for the host
@@ -167,7 +164,6 @@ end--[[}}}]]
 
 function linkPCFields(src)--[[{{{]]
 	local src = link.getTargetDatabaseNode();
-    Debug.console(src);
 	if src then
 		name.setLink(src.createChild("name", "string"), true);
 		wounds.setLink(src.createChild("health.wounds", "number"));
